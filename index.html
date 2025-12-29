@@ -1832,95 +1832,162 @@
         });
 
         // ========== REVIEWS CAROUSEL (AUTO-SCROLL 5 SEK + SWIPE) ==========
-        const reviewsTrack = document.getElementById('reviewsTrack');
-        const carouselDotsContainer = document.getElementById('carouselDots');
+        (function() {
+            const reviewsTrack = document.getElementById('reviewsTrack');
+            const carouselDotsContainer = document.getElementById('carouselDots');
 
-        if (reviewsTrack && carouselDotsContainer) {
+            if (!reviewsTrack || !carouselDotsContainer) return;
+
             const reviews = reviewsTrack.querySelectorAll('.review-card');
-            let currentReview = 0;
-            let autoScrollInterval;
-            let autoScrollEnabled = true; // Flag für Auto-Scroll
+            if (reviews.length === 0) return;
+
+            // State Management
+            let currentIndex = 0;
+            let autoScrollTimer = null;
+            let userHasInteracted = false;
+            let isHovering = false;
+
+            // Touch tracking
             let touchStartX = 0;
             let touchEndX = 0;
+            let touchStartTime = 0;
 
-            // Create dots
+            // Create navigation dots
             reviews.forEach((_, index) => {
                 const dot = document.createElement('button');
                 dot.classList.add('carousel-dot');
-                if (index === 0) dot.classList.add('active');
                 dot.setAttribute('aria-label', `Bewertung ${index + 1}`);
-                dot.addEventListener('click', () => {
-                    stopAutoScroll(); // PERMANENT STOP bei Klick
-                    goToReview(index);
+                if (index === 0) dot.classList.add('active');
+
+                dot.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    userHasInteracted = true;
+                    stopAutoScroll();
+                    goToSlide(index);
                 });
+
                 carouselDotsContainer.appendChild(dot);
             });
 
-            const dots = carouselDotsContainer.querySelectorAll('.carousel-dot');
+            const dots = Array.from(carouselDotsContainer.querySelectorAll('.carousel-dot'));
 
-            function goToReview(index) {
-                currentReview = index;
-                reviewsTrack.style.transform = `translateX(-${currentReview * 100}%)`;
+            // Navigate to specific slide
+            function goToSlide(index) {
+                currentIndex = index;
 
+                // Update transform
+                reviewsTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+                // Update dots
                 dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentReview);
+                    if (i === currentIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
                 });
             }
 
-            function nextReview() {
-                currentReview = (currentReview + 1) % reviews.length;
-                goToReview(currentReview);
+            // Go to next slide
+            function nextSlide() {
+                const nextIndex = (currentIndex + 1) % reviews.length;
+                goToSlide(nextIndex);
             }
 
-            function startAutoScroll() {
-                if (autoScrollEnabled) {
-                    clearInterval(autoScrollInterval);
-                    autoScrollInterval = setInterval(nextReview, 5000); // 5 Sekunden
-                }
-            }
-
-            function stopAutoScroll() {
-                autoScrollEnabled = false; // PERMANENT STOP
-                clearInterval(autoScrollInterval);
-            }
-
-            // Touch/Swipe Support
-            reviewsTrack.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            });
-
-            reviewsTrack.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                const diff = touchStartX - touchEndX;
-
-                if (Math.abs(diff) > swipeThreshold) {
-                    stopAutoScroll(); // PERMANENT STOP bei Swipe
-
-                    if (diff > 0) {
-                        // Swipe left - next
-                        currentReview = (currentReview + 1) % reviews.length;
-                    } else {
-                        // Swipe right - previous
-                        currentReview = (currentReview - 1 + reviews.length) % reviews.length;
-                    }
-                    goToReview(currentReview);
-                }
+            // Go to previous slide
+            function prevSlide() {
+                const prevIndex = (currentIndex - 1 + reviews.length) % reviews.length;
+                goToSlide(prevIndex);
             }
 
             // Start auto-scroll
-            startAutoScroll();
+            function startAutoScroll() {
+                // Only start if user hasn't interacted and not hovering
+                if (userHasInteracted || isHovering) return;
 
-            // Pause on hover (nur wenn Auto-Scroll noch aktiv)
+                stopAutoScroll(); // Clear any existing timer
+                autoScrollTimer = setInterval(nextSlide, 5000);
+            }
+
+            // Stop auto-scroll permanently
+            function stopAutoScroll() {
+                if (autoScrollTimer) {
+                    clearInterval(autoScrollTimer);
+                    autoScrollTimer = null;
+                }
+            }
+
+            // Touch event handlers
+            reviewsTrack.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartTime = Date.now();
+            }, { passive: true });
+
+            reviewsTrack.addEventListener('touchmove', (e) => {
+                touchEndX = e.touches[0].clientX;
+            }, { passive: true });
+
+            reviewsTrack.addEventListener('touchend', () => {
+                const touchDuration = Date.now() - touchStartTime;
+                const touchDistance = touchStartX - touchEndX;
+                const minSwipeDistance = 50;
+                const maxSwipeTime = 500;
+
+                // Valid swipe: minimum distance, maximum time
+                if (Math.abs(touchDistance) > minSwipeDistance && touchDuration < maxSwipeTime) {
+                    userHasInteracted = true;
+                    stopAutoScroll();
+
+                    if (touchDistance > 0) {
+                        // Swiped left - go to next
+                        nextSlide();
+                    } else {
+                        // Swiped right - go to previous
+                        prevSlide();
+                    }
+                }
+
+                // Reset touch tracking
+                touchStartX = 0;
+                touchEndX = 0;
+                touchStartTime = 0;
+            }, { passive: true });
+
+            // Mouse hover - pause auto-scroll temporarily
             reviewsTrack.addEventListener('mouseenter', () => {
-                if (autoScrollEnabled) clearInterval(autoScrollInterval);
+                isHovering = true;
+                stopAutoScroll();
             });
-            reviewsTrack.addEventListener('mouseleave', startAutoScroll);
-        }
+
+            reviewsTrack.addEventListener('mouseleave', () => {
+                isHovering = false;
+                startAutoScroll(); // Will only restart if user hasn't interacted
+            });
+
+            // Keyboard navigation (Arrow keys)
+            document.addEventListener('keydown', (e) => {
+                // Only respond if carousel is in viewport
+                const rect = reviewsTrack.getBoundingClientRect();
+                const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+
+                if (!isInViewport) return;
+
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    userHasInteracted = true;
+                    stopAutoScroll();
+                    prevSlide();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    userHasInteracted = true;
+                    stopAutoScroll();
+                    nextSlide();
+                }
+            });
+
+            // Initialize - start auto-scroll
+            startAutoScroll();
+        })();
 
         // ========== FAQ ACCORDION ==========
         document.querySelectorAll('.faq-question').forEach(button => {
