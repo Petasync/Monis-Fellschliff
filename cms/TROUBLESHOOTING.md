@@ -14,7 +14,7 @@
 
 3. **Dateipfade falsch**
    - Lösung: Prüfen Sie ob alle Ordner existieren:
-     - `/admin/`
+     - `/cms/`
      - `/assets/images/gallery/`
 
 4. **Fehlende PHP-Extensions**

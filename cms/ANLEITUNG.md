@@ -2,20 +2,20 @@
 
 ## 📋 Login-Daten
 
-**URL:** `https://monis-fellschliff.de/admin/`
+**URL:** `https://monis-fellschliff.de/cms/`
 
 **Standard-Login:**
 - Benutzername: `monika`
 - Passwort: `MonisFellschliff2025!`
 
-⚠️ **WICHTIG:** Ändern Sie das Passwort in `admin/config.php` Zeile 4!
+⚠️ **WICHTIG:** Ändern Sie das Passwort in `cms/config.php` Zeile 4!
 
 ---
 
 ## 🚀 Schnellstart
 
 ### 1. Login
-- Öffnen Sie `https://monis-fellschliff.de/admin/`
+- Öffnen Sie `https://monis-fellschliff.de/cms/`
 - Geben Sie Ihren Benutzernamen und Passwort ein
 - Klicken Sie auf "Anmelden"
 

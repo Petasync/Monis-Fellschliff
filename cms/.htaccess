@@ -20,4 +20,4 @@ php_flag display_errors on
 php_flag log_errors on
 
 # Error handling - show error page if PHP fails
-ErrorDocument 500 /admin/fehler.html
+ErrorDocument 500 /cms/fehler.html

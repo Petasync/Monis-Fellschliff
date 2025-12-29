@@ -1831,7 +1831,7 @@
             observer.observe(el);
         });
 
-        // ========== REVIEWS CAROUSEL (AUTO-SCROLL 5 SEK) ==========
+        // ========== REVIEWS CAROUSEL (AUTO-SCROLL 5 SEK + SWIPE) ==========
         const reviewsTrack = document.getElementById('reviewsTrack');
         const carouselDotsContainer = document.getElementById('carouselDots');
 
@@ -1839,6 +1839,9 @@
             const reviews = reviewsTrack.querySelectorAll('.review-card');
             let currentReview = 0;
             let autoScrollInterval;
+            let autoScrollEnabled = true; // Flag für Auto-Scroll
+            let touchStartX = 0;
+            let touchEndX = 0;
 
             // Create dots
             reviews.forEach((_, index) => {
@@ -1846,7 +1849,10 @@
                 dot.classList.add('carousel-dot');
                 if (index === 0) dot.classList.add('active');
                 dot.setAttribute('aria-label', `Bewertung ${index + 1}`);
-                dot.addEventListener('click', () => goToReview(index));
+                dot.addEventListener('click', () => {
+                    stopAutoScroll(); // PERMANENT STOP bei Klick
+                    goToReview(index);
+                });
                 carouselDotsContainer.appendChild(dot);
             });
 
@@ -1859,8 +1865,6 @@
                 dots.forEach((dot, i) => {
                     dot.classList.toggle('active', i === currentReview);
                 });
-
-                resetAutoScroll();
             }
 
             function nextReview() {
@@ -1869,18 +1873,52 @@
             }
 
             function startAutoScroll() {
-                autoScrollInterval = setInterval(nextReview, 5000); // 5 Sekunden
+                if (autoScrollEnabled) {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = setInterval(nextReview, 5000); // 5 Sekunden
+                }
             }
 
-            function resetAutoScroll() {
+            function stopAutoScroll() {
+                autoScrollEnabled = false; // PERMANENT STOP
                 clearInterval(autoScrollInterval);
-                startAutoScroll();
             }
 
+            // Touch/Swipe Support
+            reviewsTrack.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            reviewsTrack.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+
+                if (Math.abs(diff) > swipeThreshold) {
+                    stopAutoScroll(); // PERMANENT STOP bei Swipe
+
+                    if (diff > 0) {
+                        // Swipe left - next
+                        currentReview = (currentReview + 1) % reviews.length;
+                    } else {
+                        // Swipe right - previous
+                        currentReview = (currentReview - 1 + reviews.length) % reviews.length;
+                    }
+                    goToReview(currentReview);
+                }
+            }
+
+            // Start auto-scroll
             startAutoScroll();
 
-            // Pause on hover
-            reviewsTrack.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
+            // Pause on hover (nur wenn Auto-Scroll noch aktiv)
+            reviewsTrack.addEventListener('mouseenter', () => {
+                if (autoScrollEnabled) clearInterval(autoScrollInterval);
+            });
             reviewsTrack.addEventListener('mouseleave', startAutoScroll);
         }
 
