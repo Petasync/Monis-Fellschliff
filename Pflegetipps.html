@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Pflegetipps & Ratgeber für Ihren Hund | Moni's Fellschliff Dietenhofen</title>
+    <meta name="description" content="Professionelle Pflegetipps und Ratgeber für Ihren Hund. Erfahren Sie alles über richtige Fellpflege, Ernährung und Gesundheit von Hundefriseur Moni's Fellschliff.">
+    <meta name="keywords" content="Hundepflege Tipps, Fellpflege Ratgeber, Hund pflegen, Hundefriseur Tipps, Dietenhofen, Bayern">
+    <meta name="author" content="Monika Burr - Moni's Fellschliff">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://monis-fellschliff.de/Pflegetipps.html">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://monis-fellschliff.de/Pflegetipps.html">
+    <meta property="og:title" content="Pflegetipps & Ratgeber - Moni's Fellschliff">
+    <meta property="og:description" content="Alles was Sie über die richtige Pflege Ihres Vierbeiners wissen müssen">
+    <meta property="og:locale" content="de_DE">
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Pflegetipps & Ratgeber für Ihren Hund",
+      "description": "Professionelle Pflegetipps vom Hundefriseur: Fellpflege, Werkzeuge und Jahreszeitenpflege",
+      "author": {
+        "@type": "Person",
+        "name": "Monika Burr"
+      },
+      "publisher": {
+        "@type": "LocalBusiness",
+        "name": "Moni's Fellschliff",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Jahnstr. 13",
+          "addressLocality": "Dietenhofen",
+          "addressRegion": "Bayern",
+          "postalCode": "90599",
+          "addressCountry": "DE"
+        },
+        "telephone": "+4917648852064"
+      }
+    }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #6BB6FF;
+            --accent-color: #87CEEB;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #F0F8FF;
+            --shadow: 0 4px 6px rgba(74, 144, 226, 0.15);
+            --shadow-hover: 0 8px 15px rgba(74, 144, 226, 0.25);
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --info-color: #2196F3;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        body.menu-open {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: white;
+        }
+        
+        /* ==================== HEADER ==================== */
+        header {
+            background: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1002;
+        }
+        
+        .paw-icon {
+            display: inline-block;
+            transform: rotate(-15deg);
+        }
+        
+        /* Desktop Navigation */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu li a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: block;
+            font-size: 0.95rem;
+        }
+        
+        .nav-menu li a:hover,
+        .nav-menu li a:focus {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex;
+            background: white;
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            position: relative;
+            z-index: 1002;
+            transition: transform 0.3s;
+        }
+        
+        .menu-toggle:active {
+            transform: scale(0.95);
+        }
+        
+        /* Mobile Navigation Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                transform: translateX(0);
+                top: 0;
+                flex-direction: column;
+                background: white;
+                width: 85%;
+                max-width: 320px;
+                height: 100vh;
+                padding: 6rem 0 2rem;
+                gap: 0;
+                transition: transform 0.3s ease;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+                z-index: 1001;
+                overflow-y: auto;
+            }
+            
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+            
+            .nav-menu li {
+                width: 100%;
+            }
+            
+            .nav-menu li a {
+                padding: 1.3rem 2rem;
+                border-radius: 0;
+                border-bottom: 1px solid #eee;
+                font-size: 1.1rem;
+            }
+            
+            .nav-menu li a:hover {
+                background: rgba(255,255,255,0.15);
+                transform: translateX(-100%);
+            }
+            
+            /* Overlay */
+            .nav-overlay {
+                display: none;
+            flex;
+                position: fixed;
+                top: 0;
+                transform: translateX(0);
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.6);
+                z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            }
+            
+            .nav-overlay.active {
+            opacity: 1;
+                display: block;
+            }
+        }
+        
+        /* ==================== HERO ==================== */
+        .hero {
+            margin-top: 70px;
+            padding: clamp(2rem, 6vw, 3rem) 1rem;
+            background: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero p {
+            color: rgba(255,255,255,0.95);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+        }
+        
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            padding: clamp(2rem, 6vw, 4rem) 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-100%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+        }
+        
+        /* ==================== QUICK TIPS ==================== */
+        .quick-tips {
+            background: white;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .tip-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border-top: 3px solid var(--secondary-color);
+        }
+        
+        .tip-card:active {
+            transform: scale(0.98);
+        }
+        
+        .tip-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tip-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+        }
+        
+        .tip-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* ==================== CONTENT GRID ==================== */
+        .content-section {
+            background: var(--bg-light);
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 992px) {
+            .content-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+            
+            .sidebar {
+                position: sticky;
+                top: 100px;
+                height: fit-content;
+            }
+        }
+        
+        /* ==================== ARTICLE CARDS ==================== */
+        .article-card {
+            background: white;
+            border-radius: 20px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            transform: translateX(0);
+            width: 5px;
+            height: 100%;
+            background: white;
+        }
+        
+        .article-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .article-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+        
+        .article-card h2 {
+            color: var(--primary-color);
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            margin-bottom: 1rem;
+        }
+        
+        .article-card h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+        }
+        
+        .article-card h4 {
+            color: var(--primary-color);
+            margin-top: 1rem;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+        }
+        
+        .article-card p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 1rem 0;
+        }
+        
+        .checklist li {
+            padding: 0.6rem 0;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .checklist li::before {
+            content: '✅';
+            position: absolute;
+            transform: translateX(0);
+            top: 0.6rem;
+        }
+        
+        /* ==================== INFO BOXES ==================== */
+        .tip-box,
+        .warning-box,
+        .info-box {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 10px 10px 0;
+            border-left: 4px solid;
+        }
+        
+        .tip-box {
+            background: #e8f5e9;
+            border-left-color: var(--success-color);
+        }
+        
+        .warning-box {
+            background: #FFF3E0;
+            border-left-color: var(--warning-color);
+        }
+        
+        .info-box {
+            background: #E3F2FD;
+            border-left-color: var(--info-color);
+        }
+        
+        .tip-box strong,
+        .warning-box strong,
+        .info-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-box ul {
+            margin-top: 0.5rem;
+            padding-left: 1.2rem;
+        }
+        
+        .info-box li {
+            line-height: 1.8;
+        }
+        
+        /* ==================== SIDEBAR ==================== */
+        .sidebar-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .sidebar-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.2rem);
+        }
+        
+        .sidebar-list {
+            list-style: none;
+        }
+        
+        .sidebar-list li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .sidebar-list a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .sidebar-list a:active {
+            transform: translateX(-100%);
+        }
+        
+        /* ==================== CTA SECTION ==================== */
+        .cta-button {
+            display: inline-block;
+            padding: 1.3rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+            margin-top: 1.5rem;
+            font-weight: bold;
+            min-height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .cta-button:active {
+            transform: scale(0.97);
+        }
+        
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--primary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: clamp(1.5rem, 4vw, 2rem);
+        }
+        
+        footer p {
+            line-height: 1.8;
+        }
+        
+        footer strong {
+            color: var(--accent-color);
+        }
+        
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 480px) {
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .article-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cta-button {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        
+        *:focus-visible {
+            outline: 3px solid var(--secondary-color);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo" aria-label="Moni's Fellschliff Startseite">
+                <span class="paw-icon">🐾</span>
+                <span>Moni's Fellschliff</span>
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Menü öffnen" aria-expanded="false">
+                ☰
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="#tips">Pflegetipps</a></li>
+                <li><a href="#ratgeber">Ratgeber</a></li>
+                <li><a href="index.html#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+        <div class="nav-overlay" id="navOverlay"></div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Pflegetipps & Ratgeber</h1>
+        <p>Alles was Sie über die richtige Pflege Ihres Vierbeiners wissen müssen</p>
+    </section>
+
+    <!-- Quick Tips Section -->
+    <section class="quick-tips" id="tips">
+        <div class="container">
+            <h2 class="section-title">Schnelle Tipps für den Alltag</h2>
+            <div class="tips-grid">
+                <article class="tip-card">
+                    <div class="tip-icon">🚿</div>
+                    <h3>Badefrequenz</h3>
+                    <p>Alle 4-6 Wochen baden, bei Bedarf öfter. Zu häufiges Baden kann die Haut austrocknen.</p>
+                </article>
+                <article class="tip-card">
+                    <div class="tip-icon">🪮</div>
+                    <h3>Tägliches Bürsten</h3>
+                    <p>5-10 Minuten täglich bürsten verhindert Verfilzungen und fördert die Durchblutung.</p>
+                </article>
+                <article class="tip-card">
+                    <div class="tip-icon">✂️</div>
+                    <h3>Krallenlänge</h3>
+                    <p>Krallen sollten den Boden nicht berühren, wenn der Hund steht. Alle 3-4 Wochen kontrollieren.</p>
+                </article>
+                <article class="tip-card">
+                    <div class="tip-icon">👂</div>
+                    <h3>Ohrenpflege</h3>
+                    <p>Wöchentlich kontrollieren und bei Bedarf mit speziellem Ohrenreiniger säubern.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="content-section" id="ratgeber">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Main Articles -->
+                <div class="main-content">
+                    <!-- Fellpflege Guide -->
+                    <article class="article-card" id="fellpflege">
+                        <div class="article-header">
+                            <div class="article-icon">🐕</div>
+                            <div>
+                                <h2>Der ultimative Fellpflege-Guide</h2>
+                                <p style="color: var(--text-light);">Alles über die richtige Fellpflege für jeden Felltyp</p>
+                            </div>
+                        </div>
+                        
+                        <h3>Felltypen und ihre Besonderheiten</h3>
+                        
+                        <h4>Langhaar (z.B. Yorkshire Terrier, Malteser)</h4>
+                        <ul class="checklist">
+                            <li>Tägliches Bürsten ist Pflicht</li>
+                            <li>Regelmäßiges Trimmen alle 6-8 Wochen</li>
+                            <li>Verwendung von Entwirrungsspray empfohlen</li>
+                            <li>Besonders auf Verfilzungen hinter den Ohren achten</li>
+                        </ul>
+                        
+                        <div class="tip-box">
+                            <strong>💡 Profi-Tipp:</strong> Beginnen Sie das Bürsten immer von unten nach oben und arbeiten Sie sich schichtweise vor.
+                        </div>
+                        
+                        <h4>Kurzhaar (z.B. Labrador, Beagle)</h4>
+                        <ul class="checklist">
+                            <li>2-3 mal wöchentlich bürsten</li>
+                            <li>Während des Fellwechsels täglich bürsten</li>
+                            <li>Gummistriegel oder Furminator verwenden</li>
+                            <li>Baden nur bei Verschmutzung nötig</li>
+                        </ul>
+                        
+                        <h4>Rauhaar (z.B. Schnauzer, Terrier)</h4>
+                        <ul class="checklist">
+                            <li>Trimmen statt Scheren für gesunde Fellstruktur</li>
+                            <li>Alle 3-4 Monate professionell trimmen lassen</li>
+                            <li>Regelmäßiges Zupfen abgestorbener Haare</li>
+                            <li>Bart und Augenbrauen besonders pflegen</li>
+                        </ul>
+                        
+                        <div class="warning-box">
+                            <strong>⚠️ Achtung:</strong> Niemals Rauhaar scheren! Dies zerstört die natürliche Fellstruktur dauerhaft.
+                        </div>
+                    </article>
+
+                    <!-- Pflegewerkzeuge -->
+                    <article class="article-card" id="werkzeuge">
+                        <div class="article-header">
+                            <div class="article-icon">🛠️</div>
+                            <div>
+                                <h2>Die richtigen Pflegewerkzeuge</h2>
+                                <p style="color: var(--text-light);">Welche Bürste für welchen Felltyp?</p>
+                            </div>
+                        </div>
+                        
+                        <h3>Grundausstattung für jeden Hundebesitzer</h3>
+                        
+                        <div class="info-box">
+                            <strong>📋 Basis-Equipment:</strong>
+                            <ul>
+                                <li>Slicker-Bürste für alltägliche Pflege</li>
+                                <li>Metallkamm für Kontrolle auf Verfilzungen</li>
+                                <li>Krallenzange oder -schleifer</li>
+                                <li>Ohrenreiniger und Wattepads</li>
+                                <li>Mildes Hundeshampoo</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <strong>💡 Investitions-Tipp:</strong> Qualität zahlt sich aus! Gute Werkzeuge halten Jahre und machen die Pflege für Sie und Ihren Hund angenehmer.
+                        </div>
+                    </article>
+
+                    <!-- Jahreszeitenpflege -->
+                    <article class="article-card" id="jahreszeiten">
+                        <div class="article-header">
+                            <div class="article-icon">🌿</div>
+                            <div>
+                                <h2>Pflege im Jahresverlauf</h2>
+                                <p style="color: var(--text-light);">Saisonale Pflegetipps für jede Jahreszeit</p>
+                            </div>
+                        </div>
+                        
+                        <h3>🌸 Frühling - Fellwechselzeit</h3>
+                        <ul class="checklist">
+                            <li>Tägliches Bürsten während des Fellwechsels</li>
+                            <li>Zeckenschutz nicht vergessen</li>
+                            <li>Pfoten nach Spaziergängen auf Grannen kontrollieren</li>
+                            <li>Allergien beobachten (Pollen)</li>
+                        </ul>
+                        
+                        <h3>☀️ Sommer - Hitzeschutz</h3>
+                        <ul class="checklist">
+                            <li>Niemals komplett scheren - Fell schützt vor Sonne!</li>
+                            <li>Pfoten vor heißem Asphalt schützen</li>
+                            <li>Nach dem Baden im See gründlich abspülen</li>
+                            <li>Regelmäßig auf Parasiten kontrollieren</li>
+                        </ul>
+                        
+                        <h3>🍂 Herbst - Vorbereitung auf Winter</h3>
+                        <ul class="checklist">
+                            <li>Zweiter großer Fellwechsel des Jahres</li>
+                            <li>Pfotenpflege intensivieren</li>
+                            <li>Nässe nach Spaziergängen gründlich trocknen</li>
+                            <li>Winterfell wachsen lassen</li>
+                        </ul>
+                        
+                        <h3>❄️ Winter - Kälteschutz</h3>
+                        <ul class="checklist">
+                            <li>Pfotenbalsam gegen Streusalz verwenden</li>
+                            <li>Nach Spaziergängen Pfoten mit lauwarmem Wasser abspülen</li>
+                            <li>Bei Bedarf Hundemantel für kurzhaarige Rassen</li>
+                            <li>Fell zwischen den Zehen kürzen (Schneeklumpen)</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Quick Links -->
+                    <div class="sidebar-card">
+                        <h3>🔗 Schnellzugriff</h3>
+                        <ul class="sidebar-list">
+                            <li><a href="#fellpflege">🐕 Fellpflege-Guide</a></li>
+                            <li><a href="#werkzeuge">🛠️ Pflegewerkzeuge</a></li>
+                            <li><a href="#jahreszeiten">🌿 Jahreszeitenpflege</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Box -->
+                    <div class="sidebar-card" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white;">
+                        <h3 style="color: white;">💬 Fragen?</h3>
+                        <p>Ich berate Sie gerne persönlich zu allen Pflegefragen!</p>
+                        <p style="margin-top: 1rem;"><strong>📞 <a href="tel:+4917648852064" style="color: white;">0176 48852064</a></strong></p>
+                        <a href="index.html#contact" style="display: block; text-align: center; background: white; color: var(--primary-color); padding: 0.8rem; border-radius: 10px; text-decoration: none; margin-top: 1rem; font-weight: bold;">
+                            Termin vereinbaren
+                        </a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: clamp(2rem, 6vw, 3rem) 1rem; text-align: center; background: var(--bg-light);">
+        <div class="container">
+            <h2 style="color: var(--primary-color); margin-bottom: 1rem; font-size: clamp(1.5rem, 4vw, 2rem);">Professionelle Pflege gewünscht?</h2>
+            <p style="color: var(--text-light); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Gerne übernehme ich die fachgerechte Pflege Ihres Lieblings. 
+                Mit meiner Erfahrung und Leidenschaft sorge ich dafür, dass sich Ihr Hund rundum wohlfühlt.
+            </p>
+            <a href="index.html#services" class="cta-button">Unsere Leistungen ansehen</a>
+            <a href="index.html#contact" class="cta-button" style="margin-left: 0.5rem;">Termin vereinbaren</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong>Moni's Fellschliff</strong><br>
+            Professionelle Hundepflege mit Herz und Verstand<br>
+            📞 <a href="tel:+4917648852064" style="color: white;">0176 48852064</a> | 📍 Dietenhofen<br>
+            &copy; 2024 Alle Rechte vorbehalten | <a href="impressum.html" style="color: white;">Impressum</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // ========== HAMBURGER MENU ==========
+        (function() {
+            var menuToggle = document.getElementById('menuToggle');
+            var navMenu = document.getElementById('navMenu');
+            var navOverlay = document.getElementById('navOverlay');
+            var body = document.body;
+            
+            function toggleMenu() {
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    navOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    menuToggle.innerHTML = '☰';
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                } else {
+                    navMenu.classList.add('active');
+                    navOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                    menuToggle.innerHTML = '✕';
+                    menuToggle.setAttribute('aria-expanded', 'true');
+                }
+            }
+            
+            menuToggle.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            };
+            
+            navOverlay.onclick = function() {
+                toggleMenu();
+            };
+            
+            var menuLinks = navMenu.querySelectorAll('a');
+            for (var i = 0; i < menuLinks.length; i++) {
+                menuLinks[i].onclick = function() {
+                    if (window.innerWidth <= 768) {
+                        setTimeout(toggleMenu, 300);
+                    }
+                };
+            }
+        })();
+    </script>
+</body>
+</html>
