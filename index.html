@@ -10,7 +10,10 @@
     
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_CLOUDFLARE_TOKEN"}'></script>
+
     <style>
         * {
             margin: 0;
@@ -78,10 +81,24 @@
             position: relative;
             z-index: 1002;
         }
-        
+
+        .logo-paws {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
         .paw-icon {
             display: inline-block;
+            font-size: 1.5rem;
+        }
+
+        .paw-icon:first-child {
             transform: rotate(-15deg);
+        }
+
+        .paw-icon:last-child {
+            transform: rotate(15deg);
         }
         
         /* Desktop Navigation */
@@ -194,26 +211,47 @@
         /* ==================== HERO ==================== */
         .hero {
             margin-top: 70px;
-            padding: clamp(2rem, 8vw, 4rem) 1rem;
+            padding: clamp(3rem, 10vw, 6rem) 1rem;
             text-align: center;
-            background: linear-gradient(135deg, #F0F8FF 0%, #FFFFFF 50%, #E6F3FF 100%);
-            min-height: 400px;
+            background: linear-gradient(rgba(74, 144, 226, 0.85), rgba(107, 182, 255, 0.85)), url('assets/images/hero/dogs-on-bench.jpg') center/cover no-repeat;
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
-        
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.7) 0%, rgba(107, 182, 255, 0.6) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
         .hero h1 {
-            font-size: clamp(1.8rem, 6vw, 3rem);
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
         }
-        
+
         .hero p {
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            color: var(--text-light);
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            color: white;
             max-width: 800px;
             margin: 0 auto;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            line-height: 1.8;
         }
         
         /* ==================== SECTIONS ==================== */
@@ -247,11 +285,43 @@
             background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
         }
         
+        /* ==================== SALON VIDEO SECTION ==================== */
+        .salon-video-section {
+            background: linear-gradient(135deg, #F0F8FF 0%, white 100%);
+        }
+
+        .salon-video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .salon-video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .salon-video-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
         /* ==================== PASSION SECTION ==================== */
         .passion-section {
             background: white;
         }
-        
+
         .passion-content {
             display: grid;
             grid-template-columns: 1fr;
@@ -443,14 +513,64 @@
         .contact-section {
             background: white;
         }
-        
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-signs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .sign-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .sign-image:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .sign-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .sign-placeholder {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
         .contact-form {
             background: var(--bg-light);
             padding: clamp(1.5rem, 4vw, 3rem);
             border-radius: 20px;
             box-shadow: var(--shadow-hover);
-            max-width: 800px;
-            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .contact-layout {
+                grid-template-columns: 300px 1fr;
+            }
         }
         
         .form-group {
@@ -550,6 +670,45 @@
             justify-content: center;
         }
         
+        /* ==================== SOCIAL MEDIA ==================== */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.5rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .social-link.instagram {
+            background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            color: white;
+        }
+
+        .social-link.facebook {
+            background: #1877f2;
+            color: white;
+        }
+
         /* ==================== FOOTER ==================== */
         footer {
             background: var(--primary-color);
@@ -557,22 +716,30 @@
             text-align: center;
             padding: clamp(1.5rem, 4vw, 2rem);
         }
-        
+
         .footer-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
             margin-bottom: 2rem;
         }
-        
+
         .footer-section h4 {
             margin-bottom: 1rem;
             color: var(--accent-color);
         }
-        
+
         footer a {
             color: white;
             text-decoration: underline;
+        }
+
+        .footer-social {
+            margin: 1.5rem 0;
+        }
+
+        .footer-social .social-links {
+            justify-content: center;
         }
         
         /* ==================== RESPONSIVE ==================== */
@@ -853,8 +1020,11 @@
     <!-- Header -->
     <header>
         <nav>
-            <a href="#home" class="logo">
-                <span class="paw-icon">🐾</span>
+            <a href="index.html" class="logo">
+                <div class="logo-paws">
+                    <span class="paw-icon">🐾</span>
+                    <span class="paw-icon">🐾</span>
+                </div>
                 <span>Moni's Fellschliff</span>
             </a>
             
@@ -874,9 +1044,26 @@
 
     <!-- Hero -->
     <section class="hero" id="home">
-        <div>
+        <div class="hero-content">
             <h1>Willkommen bei Moni's Fellschliff</h1>
             <p>"Mit Herz, mit Seele und mit der Freude aneinander. Mensch und Hund gehören zusammen."</p>
+        </div>
+    </section>
+
+    <!-- Salon Video Section -->
+    <section class="salon-video-section">
+        <div class="container">
+            <h2 class="section-title">Salon Impressionen</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: clamp(1rem, 3vw, 1.1rem);">
+                Werfen Sie einen Blick in unseren liebevoll eingerichteten Salon
+            </p>
+            <div class="salon-video-container">
+                <!-- Video wird hier eingefügt: <video controls><source src="assets/images/salon/salon-video.mp4" type="video/mp4"></video> -->
+                <div class="salon-video-placeholder">
+                    📹 Salon Video<br>
+                    <small style="font-size: 0.9rem; margin-top: 0.5rem; display: block;">Video hier platzieren: assets/images/salon/salon-video.mp4</small>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -902,9 +1089,16 @@
                         </div>
                     </div>
                     <a href="Pflegetipps.html" class="cta-button">Zu den Pflegetipps →</a>
-                </div>
-                <div>
-                    <div class="image-placeholder">Salon Impressionen</div>
+
+                    <!-- Social Media Links -->
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener noreferrer" class="social-link instagram">
+                            📷 Instagram
+                        </a>
+                        <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener noreferrer" class="social-link facebook">
+                            👍 Facebook
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -915,7 +1109,11 @@
         <div class="container">
             <h2 class="section-title">Über Mich</h2>
             <div class="about-content">
-                <div class="about-image"><img src="Bilder/Monika.webp" alt="Monika Burr"></div>
+                <div class="about-image">
+                    <img src="assets/images/about/monika-portrait.jpg" alt="Monika Burr - Zertifizierte Hunde-Groomerin" style="width: 100%; height: auto; border-radius: 20px; box-shadow: var(--shadow-hover);">
+                    <!-- Fallback wenn Bild nicht vorhanden -->
+                    <!-- <div class="image-placeholder">Foto von Monika<br><small>assets/images/about/monika-portrait.jpg</small></div> -->
+                </div>
                 <div class="about-text">
                     <h3>Monika Burr - Ihre zertifizierte Hunde-Groomerin</h3>
                     <p>"Jetzt wo ich mein Hobby zum Beruf gemacht habe, was gibt es Schöneres?!"</p>
@@ -1003,6 +1201,16 @@
                         <p>Je nach Größe und Behandlungsumfang zwischen 1-3 Stunden. Ich nehme mir für jeden Hund die Zeit, die er braucht.</p>
                     </div>
                 </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Warum zittern Hunde beim Friseur?</h3>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Zittern beim Hundefriseur kann verschiedene Ursachen haben: Aufregung, Nervosität in ungewohnter Umgebung, oder auch Kälte nach dem Baden. Bei Moni's Fellschliff sorgen wir für eine ruhige, warme Atmosphäre und nehmen uns besonders viel Zeit für ängstliche Hunde.</p>
+                        <p style="margin-top: 0.5rem;"><a href="index.html#about" style="color: var(--primary-color); font-weight: 500;">→ Mehr über unsere stressfreie Pflege erfahren</a></p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1066,7 +1274,21 @@
     <section class="contact-section" id="contact">
         <div class="container">
             <h2 class="section-title">Kontakt & Terminanfrage</h2>
-            <div class="contact-form">
+
+            <div class="contact-layout">
+                <!-- Salon Signs -->
+                <div class="contact-signs">
+                    <div class="sign-image">
+                        <!-- <img src="assets/images/signs/sign-1.jpg" alt="Salon Schild"> -->
+                        <div class="sign-placeholder">🪧 Salon Schild 1<br><small>assets/images/signs/</small></div>
+                    </div>
+                    <div class="sign-image">
+                        <!-- <img src="assets/images/signs/sign-2.jpg" alt="Öffnungszeiten"> -->
+                        <div class="sign-placeholder">🪧 Salon Schild 2<br><small>assets/images/signs/</small></div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
                 <div id="successMessage" class="success-message">
                     ✅ Vielen Dank! Ihre Nachricht wurde erfolgreich versendet.
                 </div>
@@ -1105,6 +1327,7 @@
                         * Pflichtfelder | Ihre Daten werden vertraulich behandelt.
                     </p>
                 </form>
+                </div>
             </div>
         </div>
     </section>
@@ -1122,10 +1345,19 @@
             </div>
             <div class="footer-section">
                 <h4>Social Media</h4>
-                <p>Facebook: Monis Fellschliff</p>
+                <div class="footer-social">
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener noreferrer" class="social-link instagram">
+                            📷 Instagram
+                        </a>
+                        <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener noreferrer" class="social-link facebook">
+                            👍 Facebook
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <p>&copy; 2024 Moni's Fellschliff | <a href="impressum.html">Impressum</a></p>
+        <p>&copy; 2025 Moni's Fellschliff | <a href="impressum.html">Impressum</a></p>
     </footer>
     <script>
         // ========== HAMBURGER MENU ==========

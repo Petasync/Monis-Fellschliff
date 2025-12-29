@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Galerie - Unsere glücklichen Fellnasen | Moni's Fellschliff Dietenhofen</title>
-    <meta name="description" content="Entdecken Sie unsere Galerie mit glÃ¼cklichen Hunden nach professioneller Pflege. Vorher/Nachher Bilder vom Hundefriseur in Dietenhofen.">
+    <meta name="description" content="Entdecken Sie unsere Galerie mit glücklichen Hunden nach professioneller Pflege. Vorher/Nachher Bilder vom Hundefriseur in Dietenhofen.">
     <meta name="keywords" content="Hundegalerie, Vorher Nachher, Hundefriseur Bilder, Grooming Galerie Dietenhofen">
     <link rel="canonical" href="https://monis-fellschliff.de/galerie.html">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Galerie - Moni's Fellschliff">
-    <meta property="og:description" content="Sehen Sie unsere glÃ¼cklichen Fellnasen nach der professionellen Pflege">
+    <meta property="og:description" content="Sehen Sie unsere glücklichen Fellnasen nach der professionellen Pflege">
     <meta property="og:type" content="website">
-    
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_CLOUDFLARE_TOKEN"}'></script>
+
     <style>
         * {
             margin: 0;
@@ -20,7 +23,7 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         :root {
             --primary-color: #4A90E2;
             --secondary-color: #6BB6FF;
@@ -31,19 +34,24 @@
             --shadow: 0 4px 6px rgba(74, 144, 226, 0.15);
             --shadow-hover: 0 8px 15px rgba(74, 144, 226, 0.25);
         }
-        
+
         html {
             scroll-behavior: smooth;
             font-size: 16px;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
             background: linear-gradient(135deg, #F0F8FF 0%, #FFFFFF 100%);
+            overflow-x: hidden;
         }
-        
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
         /* ==================== HEADER ==================== */
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -54,7 +62,7 @@
             z-index: 1000;
             box-shadow: var(--shadow);
         }
-        
+
         nav {
             max-width: 1200px;
             margin: 0 auto;
@@ -63,7 +71,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-weight: bold;
@@ -72,95 +80,132 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            z-index: 1001;
+            position: relative;
+            z-index: 1002;
         }
-        
+
+        .logo-paws {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
         .paw-icon {
             display: inline-block;
+            font-size: 1.5rem;
+        }
+
+        .paw-icon:first-child {
             transform: rotate(-15deg);
         }
-        
+
+        .paw-icon:last-child {
+            transform: rotate(15deg);
+        }
+
         .nav-menu {
             list-style: none;
             display: flex;
             gap: 1.5rem;
+            margin: 0;
+            padding: 0;
         }
-        
+
         .nav-menu li a {
             color: white;
             text-decoration: none;
             transition: all 0.3s;
             padding: 0.5rem 1rem;
             border-radius: 20px;
+            display: block;
+            font-size: 1rem;
         }
-        
+
         .nav-menu li a:hover {
             background: rgba(255,255,255,0.2);
         }
-        
+
         .menu-toggle {
             display: none;
-            background: none;
+            background: white;
             border: none;
-            color: white;
+            color: var(--primary-color);
             font-size: 1.8rem;
             cursor: pointer;
             padding: 0.5rem;
-            z-index: 1001;
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1002;
+            font-weight: bold;
         }
-        
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             .menu-toggle {
-                display: block;
+                display: flex;
             }
-            
+
             .nav-menu {
                 position: fixed;
-                left: -100%;
+                left: 0;
                 top: 0;
                 flex-direction: column;
-                background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-                width: 80%;
-                max-width: 300px;
+                background: white;
+                width: 85%;
+                max-width: 320px;
                 height: 100vh;
-                padding: 5rem 0 2rem;
+                padding: 6rem 0 2rem;
                 gap: 0;
-                transition: left 0.3s ease-in-out;
-                box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+                z-index: 1001;
+                overflow-y: auto;
             }
-            
+
             .nav-menu.active {
-                left: 0;
+                transform: translateX(0);
             }
-            
+
             .nav-menu li {
                 width: 100%;
+                border-bottom: 1px solid #eee;
             }
-            
+
             .nav-menu li a {
-                padding: 1rem 2rem;
+                padding: 1.3rem 2rem;
                 border-radius: 0;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-                display: block;
                 font-size: 1.1rem;
+                color: var(--text-dark);
             }
-            
-            .nav-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 999;
-            }
-            
-            .nav-overlay.active {
-                display: block;
+
+            .nav-menu li a:hover {
+                background: var(--bg-light);
+                color: var(--primary-color);
             }
         }
-        
+
         /* ==================== HERO ==================== */
         .hero {
             margin-top: 70px;
@@ -170,352 +215,145 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .hero h1 {
             font-size: clamp(1.8rem, 5vw, 2.5rem);
             color: white;
             margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
-        
+
         .hero p {
             color: rgba(255,255,255,0.95);
             font-size: clamp(1rem, 3vw, 1.2rem);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
-        
+
         /* ==================== CONTAINER ==================== */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 1rem;
         }
-        
+
         section {
             padding: clamp(2rem, 6vw, 4rem) 1rem;
         }
-        
-        .section-title {
+
+        .gallery-intro {
             text-align: center;
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            font-size: clamp(0.95rem, 2vw, 1.1rem);
-        }
-        
-        /* ==================== GALLERY ==================== */
-        .gallery-section {
-            background: white;
-        }
-        
-        .filter-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto 3rem;
             padding: 0 1rem;
         }
-        
-        .filter-btn {
+
+        .gallery-intro h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .gallery-intro p {
+            color: var(--text-light);
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             padding: 0.7rem 1.5rem;
             background: white;
-            border: 2px solid var(--primary-color);
             color: var(--primary-color);
+            text-decoration: none;
             border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
             font-weight: 500;
-            font-size: 0.95rem;
-            min-height: 44px;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
         }
-        
-        .filter-btn:active {
-            transform: scale(0.97);
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
         }
-        
-        .filter-btn.active {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+
+        .social-link.instagram {
+            background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
             color: white;
         }
-        
+
+        .social-link.facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        /* ==================== GALLERY GRID ==================== */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
-        
+
         .gallery-item {
             position: relative;
-            border-radius: 20px;
+            aspect-ratio: 1;
+            border-radius: 15px;
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: all 0.3s;
-            background: white;
             cursor: pointer;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
         }
-        
-        .gallery-item:active {
-            transform: scale(0.98);
-        }
-        
-        .gallery-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .gallery-placeholder {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, var(--bg-light) 0%, var(--secondary-color) 30%, var(--primary-color) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-        }
-        
-        .gallery-info {
-            padding: 1.2rem;
-            background: white;
-        }
-        
-        .gallery-info h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-size: clamp(1.1rem, 3vw, 1.2rem);
-        }
-        
-        .gallery-info p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .gallery-tags {
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-            margin-top: 0.8rem;
-        }
-        
-        .tag {
-            padding: 0.3rem 0.7rem;
-            background: var(--bg-light);
-            color: var(--primary-color);
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        /* ==================== BEFORE/AFTER ==================== */
-        .before-after-section {
-            background: linear-gradient(135deg, var(--bg-light) 0%, white 100%);
-        }
-        
-        /* Grid für 2 Hunde nebeneinander (4 Bilder pro Reihe auf Desktop) */
-        .before-after-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .before-after-item {
-            background: white;
-            border-radius: 20px;
-            padding: 1rem;
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
         }
-        
-        .before-after-images {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .before-after-img {
-            position: relative;
-            aspect-ratio: 1 / 1; /* Quadratisch */
-            overflow: hidden;
-            border-radius: 15px;
-        }
-        
-        /* Für echte Bilder */
-        .before-after-img img {
+
+        .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 15px;
             display: block;
         }
-        
-        .before-after-placeholder {
+
+        .gallery-placeholder {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
             color: white;
-            font-size: 1.3rem;
-            border-radius: 15px;
-            font-weight: bold;
-        }
-        
-        .before-label,
-        .after-label {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            z-index: 10;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-        
-        .before-label {
-            background: rgba(255, 152, 0, 0.95);
-            color: white;
-        }
-        
-        .after-label {
-            background: rgba(76, 175, 80, 0.95);
-            color: white;
-        }
-        
-        .before-after-description {
+            font-size: 1.2rem;
             text-align: center;
+            padding: 1rem;
         }
-        
-        .before-after-description h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
+
+        .gallery-placeholder small {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
         }
-        
-        .before-after-description p {
-            color: var(--text-light);
-            font-size: 0.95rem;
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 0.75rem;
+            }
         }
-        
-        /* ==================== MODAL ==================== */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            animation: fadeIn 0.3s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .modal-content {
-            position: relative;
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 90vh;
-            top: 50%;
-            transform: translateY(-50%);
-            border-radius: 10px;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 2.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 2001;
-            background: rgba(0,0,0,0.5);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-        
-        .close-modal:active {
-            transform: scale(0.95);
-        }
-        
-        /* ==================== CTA SECTION ==================== */
-        .cta-section {
-            padding: clamp(2rem, 6vw, 4rem) 1rem;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            text-align: center;
-        }
-        
-        .cta-section h2 {
-            color: white;
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            margin-bottom: 1rem;
-        }
-        
-        .cta-section p {
-            color: rgba(255,255,255,0.95);
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            margin-bottom: 1.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: white;
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: 30px;
-            transition: all 0.3s;
-            font-weight: bold;
-            margin: 0.5rem;
-            min-height: 50px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .cta-button:active {
-            transform: scale(0.97);
-        }
-        
+
         /* ==================== FOOTER ==================== */
         footer {
             background: var(--primary-color);
@@ -523,74 +361,55 @@
             text-align: center;
             padding: clamp(1.5rem, 4vw, 2rem);
         }
-        
+
         .footer-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
-        
+
         .footer-section h4 {
             margin-bottom: 1rem;
             color: var(--accent-color);
         }
-        
-        .footer-section p {
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-        
+
         footer a {
             color: white;
             text-decoration: underline;
         }
-        
-        /* ==================== RESPONSIVE ==================== */
-        /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 992px) {
-            .before-after-grid {
-                grid-template-columns: 1fr;
-                max-width: 500px;
-                margin-left: auto;
-                margin-right: auto;
-            }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            margin: 0.5rem;
         }
-        
-        @media (max-width: 480px) {
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .before-after-images {
-                gap: 0.3rem;
-            }
-            
-            .filter-buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filter-btn {
-                width: 100%;
-            }
-            
-            .cta-button {
-                width: 100%;
-            }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
         }
-        
+
         @media (prefers-reduced-motion: reduce) {
             * {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
+                animation: none !important;
+                transition: none !important;
             }
-            
             html {
                 scroll-behavior: auto;
             }
         }
-        
+
         *:focus-visible {
             outline: 3px solid var(--secondary-color);
             outline-offset: 2px;
@@ -601,599 +420,212 @@
     <!-- Header -->
     <header>
         <nav>
-            <a href="index.html" class="logo" aria-label="Moni's Fellschliff Startseite">
-                <span class="paw-icon">ðŸ¾</span>
+            <a href="index.html" class="logo">
+                <div class="logo-paws">
+                    <span class="paw-icon">🐾</span>
+                    <span class="paw-icon">🐾</span>
+                </div>
                 <span>Moni's Fellschliff</span>
             </a>
-            
-            <button class="menu-toggle" aria-label="MenÃ¼ Ã¶ffnen" aria-expanded="false">
-                â˜°
-            </button>
-            
-            <ul class="nav-menu">
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Menü">☰</button>
+
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#services">Leistungen</a></li>
-                <li><a href="index.html#about">Ãœber mich</a></li>
-                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="index.html#about">Über mich</a></li>
+                <li><a href="Galerie.html">Galerie</a></li>
+                <li><a href="index.html#reviews">Bewertungen</a></li>
                 <li><a href="index.html#contact">Kontakt</a></li>
             </ul>
         </nav>
-        <div class="nav-overlay"></div>
+        <div class="nav-overlay" id="navOverlay"></div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
-        <h1>Unsere Fellnasen-Galerie</h1>
-        <p>Entdecken Sie die Verwandlungen unserer glÃ¼cklichen Kunden</p>
+        <h1>🐾 Unsere Galerie 🐾</h1>
+        <p>Glückliche Fellnasen nach der professionellen Pflege</p>
     </section>
 
-    <!-- Main Gallery Section -->
-    <section class="gallery-section">
+    <!-- Gallery Section -->
+    <section>
         <div class="container">
-            <h2 class="section-title">Glückliche Fellnasen</h2>
-            <p class="section-subtitle">Jeder Hund ist einzigartig - sehen Sie selbst!</p>
-            
-            
+            <div class="gallery-intro">
+                <h2>Vorher/Nachher Transformationen</h2>
+                <p>Entdecken Sie die wunderbaren Verwandlungen unserer vierbeinigen Kunden. Jeder Hund ist einzigartig und verdient eine individuelle, liebevolle Pflege.</p>
+
+                <!-- Social Media Links -->
+                <div class="social-links">
+                    <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener noreferrer" class="social-link instagram">
+                        📷 Folgen Sie uns auf Instagram
+                    </a>
+                    <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener noreferrer" class="social-link facebook">
+                        👍 Besuchen Sie uns auf Facebook
+                    </a>
+                </div>
+            </div>
+
             <!-- Gallery Grid -->
             <div class="gallery-grid">
-                <!-- Gallery Item 1 -->
-                <article class="gallery-item" data-category="langhaar">
-                    <img src="Bilder/großer_brauner_hund_fertig.webp" alt="Langhaar Hund nach professioneller Pflege" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Luna - Yorkshire Terrier</h3>
-                        <p>Komplette Fellpflege mit Styling</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Langhaar</span>
-                            <span class="tag">Baden</span>
-                            <span class="tag">Schneiden</span>
-                        </div>
+                <!-- Placeholder für Bilder - Bilder von Instagram/WhatsApp hier einfügen -->
+                <div class="gallery-item">
+                    <!-- <img src="assets/images/gallery/dog-1.jpg" alt="Hund nach Pflege"> -->
+                    <div class="gallery-placeholder">
+                        🐕 Bild 1<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
-                
-                <!-- Gallery Item 2 -->
-                <article class="gallery-item" data-category="kurzhaar">
-                    <img src="Bilder/groß_braun_1.webp" alt="Brauner Hund in der Badewanne" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Max - Labrador</h3>
-                        <p>Fellpflege mit Entwollen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Kurzhaar</span>
-                            <span class="tag">Entwollen</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Gallery Item 3 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/klein_schwarz_4.webp" alt="schwarzer kleiner Hund" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Fritz - Schnauzer</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Gallery Item 4 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/kleiner_heller_Hund.webp" alt="kleiner Heller Hund " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Fritz - Schnauzer</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Gallery Item 5 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/kleiner_grimmiger_Hund.webp" alt="grimmig schauender Hund" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi - grimmig</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Gallery Item 6 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/männlicher_Hund.webp" alt="grimmig schauender Hund" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 7 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/schwarz_weiß_Hund_klein.webp" alt="schwarz weißer Hund " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi3 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 2<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 8 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/schwarzer_Hund_schnitt.webp" alt="schwarzer kleiner lockiger Hund" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi4 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 3<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 9 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/großer_Hund_zunge.webp" alt="Hund mit rausgestreckter Zunge" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Zungi - großer</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 4<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 10 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Hund_wird_geschnitten_Ohr.webp" alt="Hund wird gerade geschnitten " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 5<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 11 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Hund_in_Badewanne_klein.webp" alt="grimmig schauender Hund" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 6<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 12 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Hund_in_badewanne.webp" alt="Weißer Hund in Badewanne" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 7<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 13 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/braun_weiß_2_Hunde.webp" alt="2 Hunde " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 8<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 14 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/4_Hunde.webp" alt="4 Hunde" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 9<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 15 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/großer_brauner_hund_beim_waschen.webp" alt="Hund wird gewaschen " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 10<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 16 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/lockennhund.webp" alt="lockiger Hund  " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 11<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
+                </div>
 
-                <!-- Gallery Item 17 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Schwarzer_Hund_halb_geschnitten.webp" alt="schwarzer Hund besonderer Schnitt" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        🐕 Bild 12<br>
+                        <small>assets/images/gallery/</small>
                     </div>
-                </article>
-
-                <!-- Gallery Item 18 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Hund_Pfote.webp" alt="Hund mit Pfote oben" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 19 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/klein_schwarz_liegen.webp" alt="liegender kleiner Hund " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 20 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/ganz_kleiner_Hund.webp" alt="Sehr kleiner Hund" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 21 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Hund_in_jacke.webp" alt="Hund in Jacke " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 22 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/weiß_locken.webp" alt="Weißer Hund mit locken " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 23 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Hund_rundes_gesicht.webp" alt="Hund mit rundem gesicht  " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 24 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Zunge_raus_schwarz.webp" alt="schwarzer Hund mit Zunge raus" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 25 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/klein_haare_abstehend.webp" alt="Hund mit abstehenden Gaaren" class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 26 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Hund_an-Tür.webp" alt="Hund steht vor der Tür " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 27 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/Boden_weiß.webp" alt="Hund liegt am Boden " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 27 -->
-                <article class="gallery-item" data-category="rauhaar">
-                    <img src="Bilder/groß_braun_4.webp" alt="großer Brauner Hund " class="gallery-image" loading="lazy">
-                    <div class="gallery-info">
-                        <h3>Hundi2 - weiß</h3>
-                        <p>Professionelles Trimmen</p>
-                        <div class="gallery-tags">
-                            <span class="tag">Rauhaar</span>
-                            <span class="tag">Trimmen</span>
-                        </div>
-                    </div>
-                </article>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Before/After Section -->
-     
-    <section class="before-after-section">
-        <div class="container">
-            <h2 class="section-title">Vorher/Nachher</h2>
-            <p class="section-subtitle">Sehen Sie die erstaunlichen Verwandlungen</p>
-            
-            <div class="before-after-grid">
-                <article class="before-after-item">
-                    <div class="before-after-images">
-                        <div class="before-after-img">
-                            <img src="Bilder/schwarz_braun_Hund_vorher.webp" alt="Hund vor der Pflege" loading="lazy">
-                               
-                            <div class="before-label">Vorher</div>
-                        </div>
-                        <div class="before-after-img">
-                            <img src="Bilder/schwarz_braun_Hund_nachher2.webp" alt="Hund nach der Pflege" loading="lazy">
-                               <div class="after-label">Nachher</div>
-                             </div>
-                        </div>
-                </article>
-                
-                <!-- Before/After Item 2 -->
-                <article class="before-after-item">
-                    <div class="before-after-images">
-                        <div class="before-after-img">
-                            <img src="Bilder/weise_Hunde_vorher.webp" alt="Hund vor der Pflege" loading="lazy">                              
-                            <div class="before-label">Vorher</div>
-                        </div>
-                        <div class="before-after-img">
-                            <img src="Bilder/weise_Hunde_nachher.webp" alt="Hund nach der Pflege" loading="lazy">
-                            <div class="after-label">Nachher</div>
-                        </div>
-                    </div>       
-                </article>
-
-                <!-- Before/After Item 3 -->
-                <article class="before-after-item">
-                    <div class="before-after-images">
-                        <div class="before-after-img">
-                            <img src="Bilder/weise_Hunde_vorher.webp" alt="Hund vor der Pflege" loading="lazy">                              
-                            <div class="before-label">Vorher</div>
-                        </div>
-                        <div class="before-after-img">
-                            <img src="Bilder/weise_Hunde_nachher.webp" alt="Hund nach der Pflege" loading="lazy">
-                            <div class="after-label">Nachher</div>
-                        </div>
-                    </div>       
-                </article>
-
-                <!-- Before/After Item 4 -->
-                <article class="before-after-item">
-                    <div class="before-after-images">
-                        <div class="before-after-img">
-                            <img src="Bilder/weise_Hunde_vorher.webp" alt="Hund vor der Pflege" loading="lazy">                              
-                            <div class="before-label">Vorher</div>
-                        </div>
-                        <div class="before-after-img">
-                            <img src="Bilder/weise_Hunde_nachher.webp" alt="Hund nach der Pflege" loading="lazy">
-                            <div class="after-label">Nachher</div>
-                        </div>
-                    </div>       
-                </article>
-
-
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="index.html#contact" class="cta-button">📞 Jetzt Termin vereinbaren</a>
             </div>
-        </div>
-    </section>
-
-    
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ihr Liebling soll auch so schön aussehen?</h2>
-            <p>Vereinbaren Sie jetzt einen Termin und gönnen Sie Ihrem Hund eine professionelle Pflege!</p>
-            <a href="index.html#contact" class="cta-button">Jetzt Termin vereinbaren</a>
-            <a href="index.html#services" class="cta-button">Unsere Leistungen</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-info">
-                <div class="footer-section">
-                    <h4>Kontakt</h4>
-                    <p>Monika Burr<br>
-                    Jahnstr. 13<br>
-                    90599 Dietenhofen<br>
-                    Tel: <a href="tel:+4917648852064">0176 48852064</a></p>
-                </div>
-                <div class="footer-section">
-                    <h4>Öffnungszeiten</h4>
-                    <p>Termine nach<br>
-                    telefonischer Vereinbarung</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Social Media</h4>
-                    <p>Facebook: Monis Fellschliff<br>
-                    Website: monis-fellschliff.de</p>
+        <div class="footer-info">
+            <div class="footer-section">
+                <h4>Kontakt</h4>
+                <p>Monika Burr<br>Jahnstr. 13<br>90599 Dietenhofen<br>Tel: <a href="tel:+4917648852064">0176 48852064</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Öffnungszeiten</h4>
+                <p>Termine nach telefonischer Vereinbarung</p>
+            </div>
+            <div class="footer-section">
+                <h4>Social Media</h4>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener noreferrer" class="social-link instagram">
+                        📷 Instagram
+                    </a>
+                    <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener noreferrer" class="social-link facebook">
+                        👍 Facebook
+                    </a>
                 </div>
             </div>
-            <p>&copy; 2024 Moni's Fellschliff | Kleinunternehmer gem. § 19 UStG | <a href="impressum.html">Impressum</a></p>
         </div>
+        <p>&copy; 2025 Moni's Fellschliff | <a href="impressum.html">Impressum</a></p>
     </footer>
 
-    <!-- Modal for Image Lightbox -->
-    <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-label="Bildvergrößerung">
-        <span class="close-modal" role="button" aria-label="Schließen">X—</span>
-        <img class="modal-content" id="modalImage" alt="">
-    </div>
-
     <script>
-        // Mobile Menu
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navMenu = document.querySelector('.nav-menu');
-        const navOverlay = document.querySelector('.nav-overlay');
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        
-        function toggleMenu() {
-            const isActive = navMenu.classList.toggle('active');
-            navOverlay.classList.toggle('active');
-            menuToggle.setAttribute('aria-expanded', isActive);
-            menuToggle.innerHTML = isActive ? 'âœ•' : 'â˜°';
-            document.body.style.overflow = isActive ? 'hidden' : '';
-        }
-        
-        menuToggle.addEventListener('click', toggleMenu);
-        navOverlay.addEventListener('click', toggleMenu);
-        navLinks.forEach(link => link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) toggleMenu();
-        }));
-        
-        // Filter functionality
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                const filterValue = button.getAttribute('data-filter');
-                
-                galleryItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
-        
-        // Modal functionality
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImage');
-        const closeModal = document.querySelector('.close-modal');
-        
-        galleryItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const img = this.querySelector('img');
-                if (img) {
-                    modal.style.display = 'block';
-                    modalImg.src = img.src;
-                    modalImg.alt = img.alt;
-                    document.body.style.overflow = 'hidden';
+        // ========== HAMBURGER MENU ==========
+        (function() {
+            var menuToggle = document.getElementById('menuToggle');
+            var navMenu = document.getElementById('navMenu');
+            var navOverlay = document.getElementById('navOverlay');
+            var body = document.body;
+
+            function toggleMenu() {
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    navOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    menuToggle.innerHTML = '☰';
+                } else {
+                    navMenu.classList.add('active');
+                    navOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                    menuToggle.innerHTML = '✕';
                 }
-            });
-        });
-        
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        });
-        
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = '';
             }
-        });
-        
-        // Keyboard navigation for modal
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'block') {
-                modal.style.display = 'none';
-                document.body.style.overflow = '';
+
+            menuToggle.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            };
+
+            navOverlay.onclick = function() { toggleMenu(); };
+
+            var menuLinks = navMenu.querySelectorAll('a');
+            for (var i = 0; i < menuLinks.length; i++) {
+                menuLinks[i].onclick = function() {
+                    if (window.innerWidth <= 768) {
+                        setTimeout(toggleMenu, 300);
+                    }
+                };
             }
-        });
+        })();
     </script>
 </body>
 </html>
