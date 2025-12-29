@@ -12,6 +12,12 @@
 # Prevent directory listing
 Options -Indexes
 
+# Set index files
+DirectoryIndex index.php index.html
+
 # PHP Security
-php_flag display_errors off
+php_flag display_errors on
 php_flag log_errors on
+
+# Error handling - show error page if PHP fails
+ErrorDocument 500 /admin/fehler.html
