@@ -7,7 +7,7 @@
     <meta name="description" content="🐾 Professionelle Hundepflege in Dietenhofen (Bayern). Zertifizierte Hunde-Groomerin Monika Burr bietet Baden, Schneiden, Trimmen & mehr. ☎️ 0176 48852064">
     <meta name="keywords" content="Hundefriseur Dietenhofen, Hundepflege Bayern, Hunde Grooming, Trimmen, Baden, Hundesalon Ansbach">
     <link rel="canonical" href="https://monis-fellschliff.de/">
-    
+
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
@@ -16,130 +16,206 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
-        
+
         :root {
-            --primary-color: #4A90E2;
-            --secondary-color: #6BB6FF;
-            --accent-color: #87CEEB;
-            --text-dark: #333;
-            --text-light: #666;
-            --bg-light: #F0F8FF;
-            --shadow: 0 4px 6px rgba(74, 144, 226, 0.15);
-            --shadow-hover: 0 8px 15px rgba(74, 144, 226, 0.25);
+            --primary: #4A90E2;
+            --primary-dark: #2E5C8A;
+            --secondary: #87CEEB;
+            --accent: #6BB6FF;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(74, 144, 226, 0.1);
+            --shadow-md: 0 4px 20px rgba(74, 144, 226, 0.15);
+            --shadow-lg: 0 8px 40px rgba(74, 144, 226, 0.2);
+            --gradient-primary: linear-gradient(135deg, #4A90E2 0%, #87CEEB 100%);
+            --gradient-overlay: linear-gradient(135deg, rgba(74, 144, 226, 0.9) 0%, rgba(135, 206, 235, 0.9) 100%);
         }
-        
+
         html {
             scroll-behavior: smooth;
             font-size: 16px;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
-            background: linear-gradient(135deg, #F0F8FF 0%, #FFFFFF 100%);
+            background: var(--white);
             overflow-x: hidden;
         }
-        
+
         body.menu-open {
             overflow: hidden;
         }
-        
-        /* ==================== HEADER ==================== */
-        header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-4 { animation-delay: 0.4s; }
+
+        /* ==================== HEADER & NAVIGATION ==================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+        }
+
         nav {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .logo {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            font-weight: bold;
-            color: white;
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-            z-index: 1002;
+            transition: transform 0.3s ease;
         }
 
-        .logo-paws {
-            display: flex;
-            gap: 4px;
-            align-items: center;
+        .logo-container:hover {
+            transform: scale(1.05);
         }
 
-        .paw-icon {
-            display: inline-block;
+        .logo-img {
+            height: 60px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .logo-text {
             font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
         }
 
-        .paw-icon:first-child {
-            transform: rotate(-15deg);
-        }
-
-        .paw-icon:last-child {
-            transform: rotate(15deg);
-        }
-        
-        /* Desktop Navigation */
         .nav-menu {
             list-style: none;
             display: flex;
-            gap: 1.5rem;
+            gap: 2.5rem;
             margin: 0;
             padding: 0;
         }
-        
+
         .nav-menu li a {
-            color: white;
+            color: var(--text-dark);
             text-decoration: none;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: block;
+            font-weight: 500;
             font-size: 1rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
         }
-        
+
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
         .nav-menu li a:hover {
-            background: rgba(255,255,255,0.2);
+            color: var(--primary);
         }
-        
-        /* Mobile Menu Toggle */
+
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+
         .menu-toggle {
             display: none;
-            background: white;
+            background: var(--gradient-primary);
             border: none;
-            color: var(--primary-color);
-            font-size: 1.8rem;
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            border-radius: 10px;
             width: 50px;
             height: 50px;
             align-items: center;
             justify-content: center;
-            position: relative;
-            z-index: 1002;
-            font-weight: bold;
+            transition: transform 0.3s ease;
         }
-        
+
+        .menu-toggle:hover {
+            transform: scale(1.1);
+        }
+
         .nav-overlay {
             display: none;
             position: fixed;
@@ -152,17 +228,679 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
+
         .nav-overlay.active {
             display: block;
             opacity: 1;
         }
-        
+
+        /* ==================== HERO ==================== */
+        .hero {
+            margin-top: 80px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-overlay), url('assets/images/hero/dogs-on-bench.webp') center/cover no-repeat fixed;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(74, 144, 226, 0.3) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: white;
+            margin-bottom: 3rem;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* ==================== SECTIONS ==================== */
+        section {
+            padding: clamp(4rem, 10vw, 8rem) 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* ==================== ABOUT SECTION ==================== */
+        .about-section {
+            background: linear-gradient(180deg, white 0%, #f8f9fa 100%);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease;
+        }
+
+        .about-image:hover {
+            transform: scale(1.02);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-content h3 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+
+        .feature-list li {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* ==================== SERVICES ==================== */
+        .services-section {
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, white 100%);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            filter: drop-shadow(0 4px 10px rgba(74, 144, 226, 0.3));
+        }
+
+        .service-card h3 {
+            font-size: 1.75rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .service-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e9ecef;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .service-list li:last-child {
+            border-bottom: none;
+        }
+
+        .service-list li::before {
+            content: '•';
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        /* ==================== GALLERY ==================== */
+        .gallery-section {
+            background: linear-gradient(180deg, white 0%, #f8f9fa 100%);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(74, 144, 226, 0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+            z-index: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* ==================== REVIEWS ==================== */
+        .reviews-section {
+            background: white;
+        }
+
+        .rating-overview {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, white 100%);
+            border-radius: 25px;
+            box-shadow: var(--shadow-md);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .rating-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1;
+        }
+
+        .rating-stars-large {
+            font-size: 2rem;
+            color: #FBBC05;
+            margin: 1rem 0;
+            letter-spacing: 3px;
+        }
+
+        .reviews-carousel-wrapper {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .reviews-carousel {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 1rem 0.5rem 2rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .reviews-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: var(--shadow-md);
+        }
+
+        .carousel-nav:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav.prev { left: 0; }
+        .carousel-nav.next { right: 0; }
+
+        .review-card {
+            flex: 0 0 350px;
+            scroll-snap-align: start;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .review-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        /* ==================== CONTACT ==================== */
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .contact-section .section-title,
+        .contact-section .section-subtitle,
+        .contact-section .section-description {
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-info h3 {
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item-icon {
+            font-size: 1.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .contact-form-wrapper {
+            background: white;
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-form-wrapper h3 {
+            color: var(--dark);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.3rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.3);
+        }
+
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(74, 144, 226, 0.4);
+        }
+
+        .submit-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-link:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
             .menu-toggle {
                 display: flex;
             }
-            
+
             .nav-menu {
                 position: fixed;
                 left: 0;
@@ -180,589 +918,63 @@
                 z-index: 1001;
                 overflow-y: auto;
             }
-            
+
             .nav-menu.active {
                 transform: translateX(0);
             }
-            
+
             .nav-menu li {
                 width: 100%;
-                border-bottom: 1px solid #eee;
+                border-bottom: 1px solid #e9ecef;
             }
-            
+
             .nav-menu li a {
-                padding: 1.3rem 2rem;
-                border-radius: 0;
-                font-size: 1.1rem;
-                color: var(--text-dark);
+                padding: 1.5rem 2rem;
                 display: block;
             }
-            
-            .nav-menu li a:hover,
-            .nav-menu li a:active {
-                background: var(--bg-light);
-                color: var(--primary-color);
+
+            .nav-menu li a::after {
+                display: none;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .reviews-carousel-wrapper {
+                padding: 0 15px;
+            }
+
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
             }
         }
-        
-        /* ==================== HERO ==================== */
-        .hero {
-            margin-top: 70px;
-            padding: clamp(3rem, 10vw, 6rem) 1rem;
-            text-align: center;
-            background: linear-gradient(rgba(74, 144, 226, 0.85), rgba(107, 182, 255, 0.85)), url('assets/images/hero/dogs-on-bench.webp') center/cover no-repeat;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.7) 0%, rgba(107, 182, 255, 0.6) 100%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2rem, 7vw, 3.5rem);
-            margin-bottom: 1.5rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            font-weight: 700;
-        }
-
-        .hero p {
-            font-size: clamp(1.1rem, 4vw, 1.5rem);
-            color: white;
-            max-width: 800px;
-            margin: 0 auto;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            line-height: 1.8;
-        }
-        
-        /* ==================== SECTIONS ==================== */
-        section {
-            padding: clamp(2rem, 8vw, 4rem) 1rem;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
-        }
-        
-        /* ==================== SALON VIDEO SECTION ==================== */
-        .salon-video-section {
-            background: linear-gradient(135deg, #F0F8FF 0%, white 100%);
-        }
-
-        .salon-video-container {
-            max-width: 900px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-hover);
-        }
-
-        .salon-video-container video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .salon-video-placeholder {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        /* ==================== PASSION SECTION ==================== */
-        .passion-section {
-            background: white;
-        }
-
-        .passion-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .passion-text h2 {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .passion-text p {
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-        
-        .passion-cards {
-            display: grid;
-            gap: 1rem;
-        }
-        
-        .passion-card {
-            background: linear-gradient(135deg, var(--bg-light) 0%, white 100%);
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--secondary-color);
-        }
-        
-        .passion-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-size: clamp(1.1rem, 4vw, 1.3rem);
-        }
-        
-        /* ==================== ABOUT SECTION ==================== */
-        .about-section {
-            background: linear-gradient(135deg, #F0F8FF 0%, white 100%);
-        }
-        
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .image-placeholder {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-        
-        .about-text h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: clamp(1.3rem, 4vw, 1.8rem);
-        }
-        
-        .about-text ul {
-            list-style: none;
-            padding: 1rem 0;
-        }
-        
-        .about-text ul li {
-            padding: 0.7rem 0;
-            padding-left: 30px;
-            position: relative;
-        }
-        
-        .about-text ul li::before {
-            content: '✅';
-            position: absolute;
-            left: 0;
-        }
-        
-        /* ==================== SERVICES SECTION ==================== */
-        .services-section {
-            background: white;
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .service-card {
-            background: linear-gradient(135deg, white 0%, var(--bg-light) 100%);
-            padding: 1.5rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-        }
-        
-        .service-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
-        }
-        
-        .service-card ul {
-            list-style: none;
-        }
-        
-        .service-card li {
-            padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            position: relative;
-            padding-left: 25px;
-            font-size: 0.95rem;
-        }
-        
-        .service-card li::before {
-            content: '✨';
-            position: absolute;
-            left: 0;
-        }
-        
-        /* ==================== FAQ SECTION ==================== */
-        .faq-section {
-            background: linear-gradient(135deg, var(--bg-light) 0%, white 100%);
-        }
-        
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .faq-item {
-            margin-bottom: 1rem;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-        
-        .faq-question {
-            padding: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            min-height: 60px;
-        }
-        
-        .faq-question h3 {
-            color: var(--primary-color);
-            margin: 0;
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            flex: 1;
-            padding-right: 1rem;
-        }
-        
-        .faq-arrow {
-            transition: transform 0.3s;
-            font-size: 1.5rem;
-            color: var(--secondary-color);
-            flex-shrink: 0;
-        }
-        
-        .faq-answer {
-            padding: 0 1.2rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background: var(--bg-light);
-        }
-        
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding: 1.2rem;
-        }
-        
-        .faq-item.active .faq-arrow {
-            transform: rotate(180deg);
-        }
-        
-        /* ==================== CONTACT FORM ==================== */
-        .contact-section {
-            background: white;
-        }
-
-        .contact-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .contact-signs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .sign-image {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s;
-        }
-
-        .sign-image:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .sign-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .sign-placeholder {
-            width: 100%;
-            aspect-ratio: 3/4;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1rem;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .contact-form {
-            background: var(--bg-light);
-            padding: clamp(1.5rem, 4vw, 3rem);
-            border-radius: 20px;
-            box-shadow: var(--shadow-hover);
-        }
-
-        @media (min-width: 768px) {
-            .contact-layout {
-                grid-template-columns: 300px 1fr;
-            }
-        }
-        
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            font-weight: 500;
-            font-size: 1rem;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.9rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(107, 182, 255, 0.2);
-        }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        .submit-button,
-        .cta-button,
-        .contact-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            text-align: center;
-            min-height: 50px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .submit-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        
-        .submit-button {
-            width: 100%;
-        }
-        
-        .contact-button {
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            margin: 1rem 0.5rem;
-        }
-        
-        .success-message,
-        .error-message {
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            display: none;
-            font-size: 1rem;
-        }
-        
-        .success-message {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 2px solid #4CAF50;
-        }
-        
-        .error-message {
-            background: #ffebee;
-            color: #c62828;
-            border: 2px solid #f44336;
-        }
-        
-        .cf-turnstile {
-            margin: 1.5rem 0;
-            display: flex;
-            justify-content: center;
-        }
-        
-        /* ==================== SOCIAL MEDIA ==================== */
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        .social-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.7rem 1.5rem;
-            background: white;
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s;
-            box-shadow: var(--shadow);
-        }
-
-        .social-link:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .social-link.instagram {
-            background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
-            color: white;
-        }
-
-        .social-link.facebook {
-            background: #1877f2;
-            color: white;
-        }
-
-        /* ==================== FOOTER ==================== */
-        footer {
-            background: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: clamp(1.5rem, 4vw, 2rem);
-        }
-
-        .footer-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h4 {
-            margin-bottom: 1rem;
-            color: var(--accent-color);
-        }
-
-        footer a {
-            color: white;
-            text-decoration: underline;
-        }
-
-        .footer-social {
-            margin: 1.5rem 0;
-        }
-
-        .footer-social .social-links {
-            justify-content: center;
-        }
-        
-        /* ==================== RESPONSIVE ==================== */
-        @media (min-width: 769px) {
-            .passion-content,
-            .about-content {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .image-placeholder {
-                height: 400px;
-            }
-        }
-        
         @media (max-width: 480px) {
-            .services-grid {
-                grid-template-columns: 1fr;
+            .hero h1 {
+                font-size: 2rem;
             }
-            
-            .cta-button,
-            .contact-button {
+
+            .hero-cta {
+                flex-direction: column;
                 width: 100%;
-                margin: 0.5rem 0;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .carousel-nav {
+                display: none;
+            }
+
+            .review-card {
+                flex: 0 0 calc(100vw - 50px);
             }
         }
-        
+
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
@@ -772,266 +984,25 @@
                 scroll-behavior: auto;
             }
         }
-        
-        *:focus-visible {
-            outline: 3px solid var(--secondary-color);
-            outline-offset: 2px;
-        }
-
-        /* ==================== REVIEWS SECTION WITH CAROUSEL - GOOGLE STYLE ==================== */
-        .reviews-section {
-            background: linear-gradient(135deg, var(--bg-light) 0%, white 100%);
-            overflow: hidden;
-        }
-
-        .rating-overview {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem 2rem;
-            background: white;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            max-width: 450px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .rating-overview .rating-number {
-            font-size: 3.5rem;
-            font-weight: 400;
-            color: var(--text-dark);
-            line-height: 1;
-        }
-
-        .rating-overview .rating-stars-large {
-            font-size: 1.6rem;
-            color: #FBBC05;
-            margin: 0.5rem 0;
-            letter-spacing: 2px;
-        }
-
-        .rating-overview .rating-count {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-        }
-
-        .reviews-carousel-wrapper {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 50px;
-        }
-
-        .reviews-carousel {
-            display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            padding: 1rem 0.5rem 2rem;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .reviews-carousel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 48px;
-            height: 48px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            transition: all 0.3s;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .carousel-nav:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transform: translateY(-50%) scale(1.05);
-        }
-
-        .carousel-nav.prev { left: 0; }
-        .carousel-nav.next { right: 0; }
-
-        .review-card {
-            flex: 0 0 320px;
-            scroll-snap-align: start;
-            background: white;
-            padding: 1.25rem;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-            transition: all 0.3s;
-            border: 1px solid #e0e0e0;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .review-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transform: translateY(-2px);
-        }
-
-        .review-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            position: relative;
-        }
-
-        .review-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 500;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .review-meta { flex: 1; min-width: 0; }
-
-        .review-author {
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 0.9rem;
-            margin: 0 0 0.25rem 0;
-        }
-
-        .review-meta-line {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .review-stars {
-            color: #FBBC05;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .review-date {
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        .google-icon {
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
-
-        .review-text {
-            color: #5f6368;
-            line-height: 1.5;
-            font-size: 0.9rem;
-            flex: 1;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 5;
-            -webkit-box-orient: vertical;
-        }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.4rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .carousel-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #dadce0;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            padding: 0;
-        }
-
-        .carousel-dot.active {
-            background: #4285F4;
-            transform: scale(1.3);
-        }
-
-        .google-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-top: 1rem;
-        }
-
-        .google-maps-container {
-            max-width: 900px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        @media (max-width: 768px) {
-            .reviews-carousel-wrapper { padding: 0 15px; }
-            .carousel-nav { width: 38px; height: 38px; font-size: 1.1rem; }
-            .carousel-nav.prev { left: 5px; }
-            .carousel-nav.next { right: 5px; }
-            .review-card { flex: 0 0 280px; }
-            .google-maps-container iframe { height: 350px; }
-        }
-
-        @media (max-width: 480px) {
-            .reviews-carousel-wrapper { padding: 0 10px; }
-            .carousel-nav { display: none; }
-            .review-card { flex: 0 0 calc(100vw - 50px); }
-        }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header id="header">
         <nav>
-            <a href="index.html" class="logo">
-                <div class="logo-paws">
-                    <span class="paw-icon">🐾</span>
-                    <span class="paw-icon">🐾</span>
-                </div>
-                <span>Moni's Fellschliff</span>
+            <a href="index.html" class="logo-container">
+                <!-- Logo wird hier eingefügt wenn hochgeladen -->
+                <!-- <img src="assets/images/logo/logo-color.svg" alt="Moni's Fellschliff Logo" class="logo-img"> -->
+                <div class="logo-text">🐾 Moni's Fellschliff</div>
             </a>
-            
+
             <button class="menu-toggle" id="menuToggle" aria-label="Menü">☰</button>
-            
+
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#services">Leistungen</a></li>
                 <li><a href="#about">Über mich</a></li>
-                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="#services">Leistungen</a></li>
+                <li><a href="Galerie.html">Galerie</a></li>
                 <li><a href="#reviews">Bewertungen</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
@@ -1042,80 +1013,59 @@
     <!-- Hero -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1>Willkommen bei Moni's Fellschliff</h1>
-            <p>"Mit Herz, mit Seele und mit der Freude aneinander. Mensch und Hund gehören zusammen."</p>
-        </div>
-    </section>
-
-    <!-- Salon Video Section -->
-    <section class="salon-video-section">
-        <div class="container">
-            <h2 class="section-title">Salon Impressionen</h2>
-            <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: clamp(1rem, 3vw, 1.1rem);">
-                Werfen Sie einen Blick in unseren liebevoll eingerichteten Salon
-            </p>
-            <div class="salon-video-container">
-                <img src="assets/images/salon/salon-impression.webp" alt="Hund in der Badewanne - Salon Impression" style="width: 100%; height: auto; display: block;">
+            <h1 class="animate-in">Moni's Fellschliff</h1>
+            <p class="hero-subtitle animate-in animate-delay-1">"Mit Herz, mit Seele und mit der Freude aneinander"</p>
+            <div class="hero-cta animate-in animate-delay-2">
+                <a href="#contact" class="btn btn-primary">
+                    📞 Jetzt Termin buchen
+                </a>
+                <a href="#about" class="btn btn-secondary">
+                    Mehr erfahren →
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Passion Section -->
-    <section class="passion-section">
-        <div class="container">
-            <div class="passion-content">
-                <div class="passion-text">
-                    <h2>Warum Hundefriseur?</h2>
-                    <p>Hunde begleiten mich schon mein ganzes Leben lang. Die artgerechte Pflege meiner Hunde war mir schon immer ein großes Anliegen.</p>
-                    <div class="passion-cards">
-                        <div class="passion-card">
-                            <h3>💙 Aus Liebe zum Tier</h3>
-                            <p>Was als langjähriges Hobby voller Liebe und Leidenschaft begann, hat sich zu einer visionären Mission entwickelt.</p>
-                        </div>
-                        <div class="passion-card">
-                            <h3>🎯 Professionelle Ausbildung</h3>
-                            <p>Als zertifizierte Hunde-Groomerin verbinde ich Fachwissen mit Herzblut für das Wohl Ihres Vierbeiners.</p>
-                        </div>
-                        <div class="passion-card">
-                            <h3>✨ Individuelle Betreuung</h3>
-                            <p>Jeder Hund ist einzigartig - deshalb nehme ich mir für jeden die Zeit, die er braucht.</p>
-                        </div>
-                    </div>
-                    <a href="Pflegetipps.html" class="cta-button">Zu den Pflegetipps →</a>
-
-                    <!-- Social Media Links -->
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener noreferrer" class="social-link instagram">
-                            📷 Instagram
-                        </a>
-                        <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener noreferrer" class="social-link facebook">
-                            👍 Facebook
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
+    <!-- About -->
     <section class="about-section" id="about">
         <div class="container">
-            <h2 class="section-title">Über Mich</h2>
-            <div class="about-content">
+            <div class="section-header">
+                <div class="section-subtitle">Über mich</div>
+                <h2 class="section-title">Professionelle Hundepflege mit Herz</h2>
+                <p class="section-description">
+                    Zertifizierte Hunde-Groomerin mit Leidenschaft für das Wohl Ihrer Vierbeiner
+                </p>
+            </div>
+
+            <div class="about-grid">
                 <div class="about-image">
-                    <img src="assets/images/about/monika-portrait.webp" alt="Monika Burr - Zertifizierte Hunde-Groomerin" style="width: 100%; height: auto; border-radius: 20px; box-shadow: var(--shadow-hover);">
+                    <img src="assets/images/about/monika-portrait.webp" alt="Monika Burr - Zertifizierte Hunde-Groomerin">
                 </div>
-                <div class="about-text">
-                    <h3>Monika Burr - Ihre zertifizierte Hunde-Groomerin</h3>
-                    <p>"Jetzt wo ich mein Hobby zum Beruf gemacht habe, was gibt es Schöneres?!"</p>
-                    <p>Meine Philosophie ist es, jeden Hund, ob groß oder klein, mit Liebe und Fachwissen zu betreuen.</p>
-                    <ul>
+
+                <div class="about-content">
+                    <h3>Monika Burr - Ihre Expertin für Hundepflege</h3>
+                    <p>
+                        Hunde begleiten mich schon mein ganzes Leben lang. Was als langjähriges Hobby voller Liebe und Leidenschaft begann, habe ich zu meiner visionären Mission gemacht.
+                    </p>
+                    <p>
+                        Als zertifizierte Hunde-Groomerin verbinde ich Fachwissen mit Herzblut für das Wohl Ihres Vierbeiners. Jeder Hund ist einzigartig - deshalb nehme ich mir für jeden die Zeit, die er braucht.
+                    </p>
+
+                    <ul class="feature-list">
                         <li>Professionelle Hundepflege für alle Rassen</li>
                         <li>Nach F.C.I Standard & Kundenwunsch</li>
                         <li>Stressfreie und liebevolle Pflege</li>
                         <li>Individuelle Zeitnahme für jeden Hund</li>
                     </ul>
-                    <a href="galerie.html" class="cta-button">Zur Galerie →</a>
+
+                    <div class="social-links" style="justify-content: flex-start;">
+                        <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener" class="social-link">
+                            📷 Instagram
+                        </a>
+                        <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener" class="social-link">
+                            👍 Facebook
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1124,29 +1074,41 @@
     <!-- Services -->
     <section class="services-section" id="services">
         <div class="container">
-            <h2 class="section-title">Unsere Leistungen</h2>
+            <div class="section-header">
+                <div class="section-subtitle">Unsere Leistungen</div>
+                <h2 class="section-title">Professionelle Rundumpflege für Ihren Liebling</h2>
+                <p class="section-description">
+                    Von der sanften Wäsche bis zum perfekten Schnitt - Ihr Hund ist bei uns in besten Händen
+                </p>
+            </div>
+
             <div class="services-grid">
                 <div class="service-card">
-                    <h3>🛁 Fellpflege</h3>
-                    <ul>
+                    <span class="service-icon">🛁</span>
+                    <h3>Fellpflege</h3>
+                    <ul class="service-list">
                         <li>Baden mit Spezialshampoo</li>
                         <li>Professionelles Föhnen</li>
                         <li>Sanftes Entwollen</li>
                         <li>Gründliches Entfilzen</li>
                     </ul>
                 </div>
+
                 <div class="service-card">
-                    <h3>✂️ Styling</h3>
-                    <ul>
+                    <span class="service-icon">✂️</span>
+                    <h3>Styling</h3>
+                    <ul class="service-list">
                         <li>Modisches Schneiden</li>
                         <li>Präzises Scheren</li>
                         <li>Fachgerechtes Trimmen</li>
                         <li>Nach Rassestandard oder Wunsch</li>
                     </ul>
                 </div>
+
                 <div class="service-card">
-                    <h3>🐾 Spezialpflege</h3>
-                    <ul>
+                    <span class="service-icon">🐾</span>
+                    <h3>Spezialpflege</h3>
+                    <ul class="service-list">
                         <li>Pfotenpflege & Ballenpflege</li>
                         <li>Krallenschneiden & -feilen</li>
                         <li>Ohrenreinigung</li>
@@ -1154,563 +1116,291 @@
                     </ul>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="#contact" class="contact-button">📞 Jetzt Termin anfragen</a>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="#contact" class="btn btn-primary">📞 Jetzt Termin anfragen</a>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="faq-section">
-        <div class="container">
-            <h2 class="section-title">Häufige Fragen</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Wie oft sollte mein Hund zum Hundefriseur?</h3>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Die Häufigkeit hängt von der Rasse und dem Felltyp ab. Langhaarige Rassen sollten alle 6-8 Wochen gepflegt werden, während kurzhaarige Rassen alle 3-4 Monate ausreichen.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Was kostet eine Behandlung?</h3>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Die Preise richten sich nach Größe, Fellbeschaffenheit und gewünschter Behandlung. Gerne erstelle ich Ihnen ein individuelles Angebot!</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Wie lange dauert eine Behandlung?</h3>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Je nach Größe und Behandlungsumfang zwischen 1-3 Stunden. Ich nehme mir für jeden Hund die Zeit, die er braucht.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Warum zittern Hunde beim Friseur?</h3>
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Zittern beim Hundefriseur kann verschiedene Ursachen haben: Aufregung, Nervosität in ungewohnter Umgebung, oder auch Kälte nach dem Baden. Bei Moni's Fellschliff sorgen wir für eine ruhige, warme Atmosphäre und nehmen uns besonders viel Zeit für ängstliche Hunde.</p>
-                        <p style="margin-top: 0.5rem;"><a href="index.html#about" style="color: var(--primary-color); font-weight: 500;">→ Mehr über unsere stressfreie Pflege erfahren</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Google Reviews Section -->
-    <section class="reviews-section" id="reviews">
-        <div class="container">
-            <h2 class="section-title">⭐ Das sagen unsere Kunden</h2>
-            <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: clamp(1rem, 3vw, 1.1rem);">
-                Überzeugen Sie sich von den Erfahrungen unserer zufriedenen Hundebesitzer
-            </p>
-            
-            <div class="rating-overview" id="ratingOverview">
-                <div class="rating-number" id="avgRating">4.9</div>
-                <div class="rating-stars-large" id="avgStars">★★★★★</div>
-                <p class="rating-count" id="reviewCount">103 Bewertungen auf Google</p>
-                <div class="google-badge">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                    </svg>
-                    Google Bewertungen
-                </div>
-            </div>
-
-            <div class="reviews-carousel-wrapper" id="reviewsWrapper">
-                <button class="carousel-nav prev" id="carouselPrev" aria-label="Vorherige Bewertung">‹</button>
-                <div class="reviews-carousel" id="reviewsCarousel"></div>
-                <button class="carousel-nav next" id="carouselNext" aria-label="Nächste Bewertung">›</button>
-            </div>
-            
-            <div class="carousel-dots" id="carouselDots"></div>
-
-            <div class="google-maps-container" style="margin-top: 3rem;">
-                <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 1.5rem; font-size: clamp(1.3rem, 4vw, 1.8rem);">
-                    📍 Finden Sie uns auf Google Maps
-                </h3>
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3214.8152993126255!2d10.682355076885607!3d49.405283462064226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4798afeee57be029%3A0x5b5cad38610b0548!2sMonis-fellschliff!5e1!3m2!1sde!2sde!4v1760963882759!5m2!1sde!2sde"
-                    width="100%" 
-                    height="450" 
-                    style="border:0; border-radius: 20px; box-shadow: var(--shadow-hover);" 
-                    allowfullscreen="" 
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-
-            <div style="text-align: center; margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="https://search.google.com/local/reviews?placeid=ChIJKeDle-6viEcRSAULYTitXCV" target="_blank" rel="noopener" class="cta-button">
-                    ⭐ Jetzt auf Google bewerten
-                </a>
-                <a href="#contact" class="cta-button">📞 Termin vereinbaren</a>
-            </div>
-        </div>
-    </section>
+    <!-- Reviews wird hier später eingefügt -->
 
     <!-- Contact -->
     <section class="contact-section" id="contact">
         <div class="container">
-            <h2 class="section-title">Kontakt & Terminanfrage</h2>
+            <div class="section-header">
+                <div class="section-subtitle">Kontakt</div>
+                <h2 class="section-title">Vereinbaren Sie einen Termin</h2>
+                <p class="section-description">
+                    Ich freue mich darauf, Ihren Vierbeiner kennenzulernen!
+                </p>
+            </div>
 
-            <div class="contact-layout">
-                <!-- Salon Signs -->
-                <div class="contact-signs">
-                    <div class="sign-image">
-                        <img src="assets/images/signs/sign-1.webp" alt="Salon Schild - Hund an der Tür">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Kontaktinformationen</h3>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📍</div>
+                        <div>
+                            <strong>Adresse</strong><br>
+                            Jahnstr. 13<br>
+                            90599 Dietenhofen
+                        </div>
                     </div>
-                    <div class="sign-image">
-                        <img src="assets/images/signs/sign-2.webp" alt="Salon Impression - Hund wird geschnitten">
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📞</div>
+                        <div>
+                            <strong>Telefon</strong><br>
+                            <a href="tel:+4917648852064" style="color: white;">0176 48852064</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">⏰</div>
+                        <div>
+                            <strong>Öffnungszeiten</strong><br>
+                            Termine nach telefonischer Vereinbarung
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener" class="social-link">
+                                📷 Instagram
+                            </a>
+                            <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener" class="social-link">
+                                👍 Facebook
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="contact-form">
-                <div id="successMessage" class="success-message">
-                    ✅ Vielen Dank! Ihre Nachricht wurde erfolgreich versendet.
+                <div class="contact-form-wrapper">
+                    <h3>Terminanfrage</h3>
+
+                    <div id="successMessage" style="display: none; padding: 1rem; background: #d4edda; color: #155724; border-radius: 15px; margin-bottom: 1rem;">
+                        ✅ Vielen Dank! Ihre Nachricht wurde erfolgreich versendet.
+                    </div>
+                    <div id="errorMessage" style="display: none; padding: 1rem; background: #f8d7da; color: #721c24; border-radius: 15px; margin-bottom: 1rem;">
+                        ❌ Fehler beim Versenden. Bitte rufen Sie an: 0176 48852064
+                    </div>
+
+                    <form id="contactForm" method="POST" action="contact.php">
+                        <div class="form-group">
+                            <label for="name">Ihr Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-Mail *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Telefon *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Ihre Nachricht *</label>
+                            <textarea id="message" name="message" placeholder="Bitte teilen Sie mir Ihren Wunschtermin und Informationen zu Ihrem Hund mit..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="cf-turnstile" data-sitekey="0x4AAAAAAB69pSK5R_GZX1tM" data-callback="onTurnstileSuccess" data-theme="light"></div>
+                        </div>
+
+                        <button type="submit" class="submit-button" id="submitBtn" disabled>
+                            Nachricht senden
+                        </button>
+
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #6c757d; text-align: center;">
+                            * Pflichtfelder | Ihre Daten werden vertraulich behandelt
+                        </p>
+                    </form>
                 </div>
-                <div id="errorMessage" class="error-message">
-                    ❌ Fehler beim Versenden. Bitte rufen Sie an: 0176 48852064
-                </div>
-                
-                <form id="contactForm" method="POST" action="contact.php">
-                    <div class="form-group">
-                        <label for="name">Ihr Name *</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-Mail *</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Telefon *</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Betreff *</label>
-                        <input type="text" id="subject" name="subject" value="Terminanfrage" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Ihre Nachricht *</label>
-                        <textarea id="message" name="message" placeholder="Bitte teilen Sie mir Ihren Wunschtermin und Informationen zu Ihrem Hund mit..." required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAB69pSK5R_GZX1tM" data-callback="onTurnstileSuccess" data-theme="light"></div>
-                    </div>
-                    <button type="submit" class="submit-button" id="submitBtn" disabled>
-                        Nachricht senden & Termin anfragen
-                    </button>
-                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
-                        * Pflichtfelder | Ihre Daten werden vertraulich behandelt.
-                    </p>
-                </form>
-                </div>
+            </div>
+
+            <div style="margin-top: 4rem; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-lg);">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3214.8152993126255!2d10.682355076885607!3d49.405283462064226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4798afeee57be029%3A0x5b5cad38610b0548!2sMonis-fellschliff!5e1!3m2!1sde!2sde!4v1760963882759!5m2!1sde!2sde"
+                    width="100%"
+                    height="450"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-info">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>🐾 Moni's Fellschliff</h4>
+                <p>
+                    Professionelle Hundepflege mit Herz und Leidenschaft in Dietenhofen.
+                </p>
+            </div>
+
             <div class="footer-section">
                 <h4>Kontakt</h4>
-                <p>Monika Burr<br>Jahnstr. 13<br>90599 Dietenhofen<br>Tel: <a href="tel:+4917648852064">0176 48852064</a></p>
+                <p>
+                    Monika Burr<br>
+                    Jahnstr. 13<br>
+                    90599 Dietenhofen<br>
+                    Tel: <a href="tel:+4917648852064">0176 48852064</a>
+                </p>
             </div>
+
             <div class="footer-section">
                 <h4>Öffnungszeiten</h4>
-                <p>Termine nach telefonischer Vereinbarung</p>
+                <p>
+                    Termine nach telefonischer Vereinbarung
+                </p>
             </div>
+
             <div class="footer-section">
                 <h4>Social Media</h4>
-                <div class="footer-social">
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener noreferrer" class="social-link instagram">
-                            📷 Instagram
-                        </a>
-                        <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener noreferrer" class="social-link facebook">
-                            👍 Facebook
-                        </a>
-                    </div>
+                <div class="social-links" style="flex-direction: column; align-items: flex-start;">
+                    <a href="https://www.instagram.com/monis_fellschliff/" target="_blank" rel="noopener" class="social-link">
+                        📷 Instagram
+                    </a>
+                    <a href="https://www.facebook.com/MonisfellschliffDietenhofen" target="_blank" rel="noopener" class="social-link">
+                        👍 Facebook
+                    </a>
                 </div>
             </div>
         </div>
-        <p>&copy; 2025 Moni's Fellschliff | <a href="impressum.html">Impressum</a></p>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Moni's Fellschliff | <a href="impressum.html" style="color: inherit;">Impressum</a> | Made with ❤️ for dogs</p>
+        </div>
     </footer>
+
     <script>
-        // ========== HAMBURGER MENU ==========
+        // ========== NAVIGATION ==========
         (function() {
-            var menuToggle = document.getElementById('menuToggle');
-            var navMenu = document.getElementById('navMenu');
-            var navOverlay = document.getElementById('navOverlay');
-            var body = document.body;
-            
-            function toggleMenu() {
-                if (navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    navOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                    menuToggle.innerHTML = '☰';
+            const header = document.getElementById('header');
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            const body = document.body;
+
+            // Scroll Effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
                 } else {
-                    navMenu.classList.add('active');
-                    navOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                    menuToggle.innerHTML = '✕';
+                    header.classList.remove('scrolled');
                 }
+            });
+
+            // Mobile Menu
+            function toggleMenu() {
+                navMenu.classList.toggle('active');
+                navOverlay.classList.toggle('active');
+                body.classList.toggle('menu-open');
+                menuToggle.innerHTML = navMenu.classList.contains('active') ? '✕' : '☰';
             }
-            
-            menuToggle.onclick = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleMenu();
-            };
-            
-            navOverlay.onclick = function() { toggleMenu(); };
-            
-            var menuLinks = navMenu.querySelectorAll('a');
-            for (var i = 0; i < menuLinks.length; i++) {
-                menuLinks[i].onclick = function() {
+
+            menuToggle.addEventListener('click', toggleMenu);
+            navOverlay.addEventListener('click', toggleMenu);
+
+            // Close menu on link click
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
                     if (window.innerWidth <= 768) {
                         setTimeout(toggleMenu, 300);
                     }
-                };
-            }
-        })();
-        
-        // ========== SMOOTH SCROLLING ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            var links = document.querySelectorAll('a[href^="#"]');
-            for (var i = 0; i < links.length; i++) {
-                links[i].addEventListener('click', function(e) {
-                    var href = this.getAttribute('href');
-                    if (href && href !== '#' && href !== '#home') {
-                        var target = document.querySelector(href);
-                        if (target) {
-                            e.preventDefault();
-                            var offset = 80;
-                            var pos = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                            window.scrollTo({top: pos, behavior: 'smooth'});
-                        }
-                    }
                 });
-            }
-        });
-        
-        // ========== FAQ ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            var questions = document.querySelectorAll('.faq-question');
-            for (var i = 0; i < questions.length; i++) {
-                questions[i].onclick = function() {
-                    var item = this.parentElement;
-                    var active = item.classList.contains('active');
-                    var allItems = document.querySelectorAll('.faq-item');
-                    for (var j = 0; j < allItems.length; j++) {
-                        allItems[j].classList.remove('active');
+            });
+        })();
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href && href !== '#' && href !== '#home') {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        const offset = 80;
+                        const pos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({top: pos, behavior: 'smooth'});
                     }
-                    if (!active) { item.classList.add('active'); }
-                };
-            }
+                }
+            });
         });
-        
+
         // ========== TURNSTILE ==========
-        var turnstileToken = null;
+        let turnstileToken = null;
         function onTurnstileSuccess(token) {
             turnstileToken = token;
             document.getElementById('submitBtn').disabled = false;
         }
-        
-        // ========== FORM ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            var form = document.getElementById('contactForm');
-            if (form) {
-                form.onsubmit = function(e) {
-                    e.preventDefault();
-                    if (!turnstileToken) {
-                        alert('Bitte Bot-Verifizierung abschliessen');
-                        return;
-                    }
-                    var data = new FormData(this);
-                    data.append('cf-turnstile-response', turnstileToken);
-                    fetch('contact.php', {method: 'POST', body: data})
-                    .then(function(r) { return r.json(); })
-                    .then(function(d) {
-                        if (d.success) {
-                            document.getElementById('successMessage').style.display = 'block';
-                            document.getElementById('errorMessage').style.display = 'none';
-                            form.reset();
-                            if (typeof turnstile !== 'undefined') turnstile.reset();
-                            turnstileToken = null;
-                            document.getElementById('submitBtn').disabled = true;
-                        } else {
-                            document.getElementById('errorMessage').style.display = 'block';
-                        }
-                    })
-                    .catch(function() {
-                        document.getElementById('errorMessage').style.display = 'block';
-                    });
-                };
+
+        // ========== CONTACT FORM ==========
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!turnstileToken) {
+                alert('Bitte Bot-Verifizierung abschließen');
+                return;
             }
-        });
-        
-        // ========== GOOGLE REVIEWS CAROUSEL ==========
-        (function() {
-            var googleReviews = [
-                { author: 'Carolin', rating: 5, time: 'vor 3 Tagen', text: 'Moni hat meinen Pudelwelpen mit ganz viel Geduld und Fingerspitzengefuehl frisiert. Sie ist sehr freundlich, arbeitet sauber, erklaert was sie tut und geht dabei auf saemtliche Fragen ein. Ich kann Moni sehr empfehlen.' },
-                { author: 'Nicole Tussler', rating: 5, time: 'vor 3 Monaten', text: 'Vielen Dank fuer die ultra spontane und kurzfristige Hilfe bei unserem wandelnden Flohzirkus! Das Waschen mit dem richtigen Shampoo und Buersten mit dem richtigen Werkzeug hat Wunder gewirkt.' },
-                { author: 'Antje Duernhoefer', rating: 5, time: 'vor 4 Monaten', text: 'Wir haben einen uebnervoesen 43kg Hund zu Monis Fellschliff gebracht. Unser Schorsch war recht verfilzt und sein Fell war nicht arg gut gepflegt. Moni hat das super gemacht!' },
-                { author: 'Mio', rating: 5, time: 'vor 6 Monaten', text: 'Wir waren neulich zum ersten mal mit unserer Malteser Huendin bei ihr und haben uns lange schon nicht so wohl bei einer Hundefriseurin gefuehlt wie bei ihr.' },
-                { author: 'Monika Grimm', rating: 5, time: 'vor 7 Monaten', text: 'Monis Fellschliff wurde mir von einer Freundin empfohlen also hab ich angerufen und einen Termin bekommen zur Eingewoehnung da ich einen Welpen habe. Sehr professionell und liebevoll!' },
-                { author: 'Harald Rieder', rating: 5, time: 'vor 7 Monaten', text: 'Wir hatten heute mit unserer Kaja, den ersten Termin. Unsere Prinzessin ist ein Angsthund aus dem Tierschutz. Frau Burr ging sehr einfuehlsam mit ihr um. Absolut empfehlenswert!' },
-                { author: 'Sven Schimmelpfennig', rating: 5, time: 'vor 7 Monaten', text: 'Kann ich nur empfehlen, Alles Top!' },
-                { author: 'Natalie Muschalik', rating: 5, time: 'vor 8 Monaten', text: '10 von 10 Sterne fuer Moni. Ich war mit unserer Sunny das erste Mal bei ihr und vom Empfang bis zur Erklaerung und der Arbeit war alles fantastisch.' },
-                { author: 'Christine Moeller', rating: 5, time: 'vor 9 Monaten', text: 'Ich bin begeistert von deiner Arbeit liebe Moni. Unsere Ronja war alles andere als einfach beim baden und foehnen, aber du hast das wunderbar gemacht.' },
-                { author: 'Patric Gangl', rating: 5, time: 'vor 10 Monaten', text: 'Wir waren mit unserer Labrador-Dame bei Moni zum Krallen schneiden und Fellpflege. Sind super zufrieden und wurden herzlich empfangen. Unsere Huendin sieht aus wie neu!' },
-                { author: 'Stefan Oppelt', rating: 5, time: 'vor einem Jahr', text: 'Waren mit unserer Kleinpudelhuendin mehrmals schon dort. Im Welpenalter. Ganz toller Umgang. Perfekter Schnitt. Absolute Empfehlung. Fairer Preis.' },
-                { author: 'Julia D', rating: 5, time: 'vor einem Jahr', text: 'Wir haben bereits oefters unseren Malteser, Taffy, bei Monis Fellschliff pflegen lassen, und wir koennten nicht zufriedener sein!' },
-                { author: 'Claire H.', rating: 5, time: 'vor einem Jahr', text: 'Ich habe meine Huendin dort nach ihrer Ankunft aus dem Tierschutz entfilzen, waschen und schneiden lassen. Moni hat das super gemacht.' },
-                { author: 'Romina Goettfert', rating: 5, time: 'vor einem Jahr', text: 'Ich war vor kurzem das erste mal mit meiner Huendin Amy bei ihr. Wir hatten das Rundum-Paket und waren sehr zufrieden!' },
-                { author: 'Angelika Fuchs', rating: 5, time: 'vor einem Jahr', text: 'War das erste Mal bei Monika, bin top zufrieden. Freundlich und kompetent hat sie unseren Hund von seiner Wolle befreit.' },
-                { author: 'Sonja Moch', rating: 5, time: 'vor einem Jahr', text: 'Sehr freundlich, toller Umgang mit dem Hund und top Ergebnis!' },
-                { author: 'Kevin Naglo', rating: 5, time: 'vor 2 Jahren', text: 'Wir waren heute zum zweiten Mal mit unserem Malteserwelpen dort und sind sehr begeistert. Ein wirklich liebevoller Umgang mit Mensch und Tier.' },
-                { author: 'Herbert Schmidt', rating: 5, time: 'vor 2 Jahren', text: 'War zum ersten mal bei Moni mit unserem Charly. Wir kommen auf jeden Fall wieder. Beide Hunde sehen toll aus!' },
-                { author: 'Monika Wiesneth', rating: 5, time: 'vor 2 Jahren', text: 'Unser Linus war heute das erste Mal da. Er hat sich bei Moni sehr wohl gefuehlt, obwohl er baden hasst!' },
-                { author: 'Angela Hofmann', rating: 5, time: 'vor 2 Jahren', text: 'Heute hatte Rocky (Golden Retriever) seinen allerersten Besuch bei Monis Fellschliff und ich bin begeistert!' },
-                { author: 'Erika Fabritius', rating: 5, time: 'vor 2 Jahren', text: 'Wir kommen mit unserem Cocker Spaniel Timmy nun schon seit einem Jahr zu Monis Fellschliff und sie ist einfach super!' },
-                { author: 'Natja Frank', rating: 5, time: 'vor 2 Jahren', text: 'Heute durfte unser Grosser (Australian Shepherd/Collie Mix) zum Friseur. Das Ergebnis ist einfach Top!' },
-                { author: 'Ashley Fuller', rating: 5, time: 'vor 2 Jahren', text: 'Monis provided excellent service. She did a wonderful job with my dogs haircut and bath. Highly recommend!' },
-                { author: 'Sarah Fassbender', rating: 5, time: 'vor 2 Jahren', text: 'Super lieber Umgang, sie hat erstmal den Hund an sich gewoehnen lassen. Auch hat sie uns super beraten.' },
-                { author: 'Maria Fischer', rating: 5, time: 'vor 2 Jahren', text: 'Wir waren gestern das erste Mal bei ihr und ich bin total begeistert. Sie hat alles sehr ausfuehrlich erklaert.' },
-                { author: 'Lena', rating: 5, time: 'vor 2 Jahren', text: 'Ich kann die liebe Moni nur waermstens empfehlen. Sie hat eine sehr angenehme, ruhige und entspannte Ausstrahlung.' },
-                { author: 'Caro Bernhardt', rating: 5, time: 'vor 2 Jahren', text: 'Wir sind super zufrieden mit dem neuen Schnitt unseres kleinen Bolonka-Maedchens! Sehr lieber Umgang.' },
-                { author: 'Martina Herrmann', rating: 5, time: 'vor 2 Jahren', text: 'Wir durften eine prima Erfahrung hier in Franken bei dieser Hundefrisoerin machen. Sehr kompetent beraten!' },
-                { author: 'Sarah Schauer', rating: 5, time: 'vor 3 Jahren', text: 'Durch Zufall sind wir auf den Salon gestossen. Nach ausfuehrlicher Beratung haben wir zeitnah einen Termin vereinbart.' },
-                { author: 'Doris Martines', rating: 5, time: 'vor 3 Jahren', text: 'Die Frau versteht ihr Handwerk. Frau Moni war sehr einfuehlsam zu meinem Pudel Eduard. Jetzt strahlt er nur so!' },
-                { author: 'Juergen Grabert', rating: 5, time: 'vor 3 Jahren', text: 'Wir waren mit unserem Kaninchenrauhhaardackel zum Trimmen. Wir waren begeistert. Sehr professionell!' },
-                { author: 'Monika Rast', rating: 5, time: 'vor 3 Jahren', text: 'Nach langer Suche bin ich endlich bei einer wirklich kompetenten Fellpflegerin angekommen.' },
-                { author: 'Frau Farbe', rating: 5, time: 'vor 3 Jahren', text: 'Unser Shih Tzu hat sich sichtlich wohl gefuehlt. Moni ist super einfuehlsam und hat uns sehr kompetent beraten.' },
-                { author: 'Claudia Aikens', rating: 5, time: 'vor 3 Jahren', text: 'Moni nahm sich viel Zeit mit dem Hund das sie sich wohl fuehlte. Habe die Luna fast nicht wieder erkannt!' },
-                { author: 'Annamaria Sammarro', rating: 5, time: 'vor 3 Jahren', text: 'Wir haben seit kurzem einen Malteserwelpen und haben sehr kurzfristig einen Termin bekommen. Begeistert!' },
-                { author: 'Joe D', rating: 5, time: 'vor 3 Jahren', text: 'I have a Portuguese water dog. Super job on the wash, cut, nails, full service. Highly recommend!' },
-                { author: 'Tawinka Sloan', rating: 5, time: 'vor 3 Jahren', text: 'Wonderful service, clean space and very professional. Monika is a sweet person who cares about animals.' },
-                { author: 'Kerstin Blank', rating: 5, time: 'vor 3 Jahren', text: 'Heute waren 2 von unseren 4 Neufundlaendern bei Monis Fellschliff. Wunderbare und hervorragende Arbeit.' },
-                { author: 'Melanie Stubenhoefer', rating: 5, time: 'vor 3 Jahren', text: 'Sehr sehr zufrieden, sie hat unsere kleine Maus wirklich sehr huebsch gemacht. Sehr freundlich!' },
-                { author: 'Christa Kathan', rating: 5, time: 'vor 3 Jahren', text: 'Freundlich, lieb zu meinem Hund und mir. Moni hat sogar die Krallen geschnitten, an die sich der Doc nicht rangetraut hat!' },
-                { author: 'Roswitha Weiss', rating: 5, time: 'vor 3 Jahren', text: 'Unsere Cora sieht richtig huebsch aus und riecht soooo gut. Wir hatten etwas Sorge - alles unbegrueundet.' },
-                { author: 'Matt Pohlman', rating: 5, time: 'vor 3 Jahren', text: 'Moni is great with both my dogs. Great styling and grooming. Would recommend to anyone!' },
-                { author: 'Roland Gilch', rating: 5, time: 'vor 3 Jahren', text: 'Vielen Dank fuer die tolle Fellpflege bei unserer Frieda. Das war dringend noetig. Jetzt sieht sie toll aus!' },
-                { author: 'Heide Ruehling', rating: 5, time: 'vor 3 Jahren', text: 'War heute das 1. Mal mit meinen Babys (zwei Malteser) bei Monis Fellschliff - hat alles wunderbar geklappt!' },
-                { author: 'Twaila King', rating: 5, time: 'vor 3 Jahren', text: 'She did such an awesome job with my shih tzu. He looked brand new! Pricing was very reasonable.' },
-                { author: 'Madlin Keitel', rating: 5, time: 'vor 3 Jahren', text: 'Super liebe Beratung ueber den Schnitt und Preis-Leistungsverhaeltnis top! Er schaut wieder wunderschoen aus.' },
-                { author: 'Gabrielle Hildebrand', rating: 5, time: 'vor 3 Jahren', text: 'Excellent Experience, Great prices, clean environment. My dog left smelling and looking great!' },
-                { author: 'Petra Luber-Scheiderer', rating: 5, time: 'vor 3 Jahren', text: 'Meine Mira sieht wunderschoen aus, nachdem sie 3 Stunden bei Moni verwoehnt wurde. Super Arbeit!' },
-                { author: 'Ulrike Habicht', rating: 5, time: 'vor 3 Jahren', text: 'Endlich eine Hundefrisoerin, die ihr Handwerk versteht. Mein Dackel ist professionell getrimmt worden!' },
-                { author: 'Jacqueline Praeger', rating: 5, time: 'vor 3 Jahren', text: 'Nach langer Suche bin ich bei Monis Fellschliff an der richtigen Stelle. Endlich jemand der sein Handwerk versteht!' },
-                { author: 'Beth Perkins', rating: 5, time: 'vor 3 Jahren', text: 'Highly recommend Monika! She did a great job with my two big dogs. They look great now!' },
-                { author: 'irene bauer', rating: 5, time: 'vor 3 Jahren', text: 'War alles super! Sehr herzlicher Umgang mit meiner etwas aengstlichen Dame, tolle Pflege. Sehr zu empfehlen!' },
-                { author: 'Bettina Kastner', rating: 5, time: 'vor 3 Jahren', text: 'Super freundliche und kompetente Arbeit! Wir kommen bald und gerne wieder!' },
-                { author: 'Jana', rating: 5, time: 'vor 3 Jahren', text: 'Waren das erste mal bei ihr und koennen sie nur empfehlen! Sie ist sehr nett und macht tolle Arbeit!' },
-                { author: 'Sandra Lies', rating: 5, time: 'vor 3 Jahren', text: 'Sind total begeistert! Sehr freundlich und kompetent, unser Casanova hat sich sehr wohl gefuehlt.' },
-                { author: 'Ralf Stannek', rating: 5, time: 'vor 3 Jahren', text: 'Moni ist eine kompetente nette Frau die ihr Handwerk versteht und Spass daran hat.' },
-                { author: 'Marco', rating: 5, time: 'vor 3 Jahren', text: 'Super freundlich und super Preis-Leistungs-Verhaeltnis! Sind sehr zufrieden und kommen gerne wieder.' },
-                { author: 'Inge Heidenreich', rating: 5, time: 'vor 3 Jahren', text: 'Sehr freundlich. Mein Hovi sieht super aus. Jederzeit gerne wieder.' },
-                { author: 'Peter Brehm', rating: 5, time: 'vor 3 Jahren', text: 'Von Anfang an ein gelungener Rundumservice fuer meinen Old English. Gerne wieder.' },
-                { author: 'Ronja Acker', rating: 5, time: 'vor 3 Jahren', text: 'Absolut zufrieden und super freundlich. Preis-Leistung ist spitze.' },
-                { author: 'Silke Reppe', rating: 5, time: 'vor 3 Jahren', text: 'Wir waren sehr zufrieden und kommen auf alle Faelle wieder.' },
-                { author: 'N Well', rating: 5, time: 'vor 3 Jahren', text: 'Danke fuer den tollen Service! Sehr zu empfehlen.' },
-                { author: 'Alexandra Kramhoeller', rating: 5, time: 'vor 3 Jahren', text: 'Sehr gute Arbeit, mein Hund war das erste mal beim Hundefriseur und Moni war sehr freundlich!' },
-                { author: 'Miss Kit', rating: 5, time: 'vor 4 Jahren', text: 'Wir waren mit unserem Hund das erste Mal bei Moni. Sie macht einfach tolle Arbeit mit Herz dabei.' },
-                { author: 'Insa Fischer', rating: 5, time: 'vor 4 Jahren', text: 'Das Ergebnis war hervorragend! Der Salon ist tip top ordentlich und sauber.' },
-                { author: 'Alisya', rating: 5, time: 'vor 4 Jahren', text: 'Frau Burr ist ein sehr liebvoller Mensch. Sie hat meine Bella wieder super huebsch gemacht.' },
-                { author: 'Bianka Ermann', rating: 5, time: 'vor 4 Jahren', text: 'Moni ist superlieb und herzlich! Preis Leistung Top. Sie kuemmert sich um Fell, Ohren, Krallen und ums Herz!' },
-                { author: 'Frank Jestrabek', rating: 5, time: 'vor 4 Jahren', text: 'Unsere Molly sieht wieder schick aus. Professionelle Arbeit. Hund ist entspannt. Sehr zufrieden.' },
-                { author: 'D Degligg', rating: 5, time: 'vor 4 Jahren', text: 'Super zufrieden! Sehr kompetenter und liebevoller Umgang mit den Hunden. Kommen gerne wieder!' },
-                { author: 'kuh Muh', rating: 5, time: 'vor 4 Jahren', text: 'Es wurde sich sehr liebevoll um meinen kleinen Racker gekuemmert. Preis Leistung ist spitze. Die Beste in der Umgebung!' },
-                { author: 'M. Dorner', rating: 5, time: 'vor 4 Jahren', text: 'Moni hat unseren Einstein wieder sehr huebsch gemacht. Preis-Leistung einfach unschlagbar. Sehr zu empfehlen.' },
-                { author: 'D. Four', rating: 5, time: 'vor 4 Jahren', text: 'Sehr gute Arbeit! Mein Hund sieht endlich top gepflegt aus. Sie geht ganz liebevoll mit den Tieren um.' },
-                { author: 'Carina Hirscher', rating: 5, time: 'vor 4 Jahren', text: 'Hundefee mit Herz. Mit voller Leidenschaft bei der Arbeit. Danke fuer deine Arbeit!' },
-                { author: 'Mienchen', rating: 5, time: 'vor 4 Jahren', text: 'Wir sind sehr zufrieden. Kommen gerne wieder.' },
-                { author: 'RM Koermer Ortega', rating: 3, time: 'vor 10 Monaten', text: '126 Euro war einfach zu teuer. Und verfilzt ist ein Hund meistens im Winter. Ein Lagotto ist nicht jedermanns Sache.' },
-                { author: 'Andrei Avadanei', rating: 4, time: 'vor 2 Jahren', text: 'Ich empfehle mit Zuversicht.' }
-            ];
-            
-            var carousel, prevBtn, nextBtn, dotsContainer;
-            var currentIndex = 0;
-            var autoplayInterval;
-            
-            function generateStars(rating) {
-                var stars = '';
-                for (var i = 1; i <= 5; i++) {
-                    stars += i <= rating ? '\u2605' : '\u2606';
-                }
-                return stars;
-            }
-            
-            function getInitials(name) {
-                var parts = name.split(' ');
-                if (parts.length >= 2) {
-                    return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
-                }
-                return name.substring(0, 2).toUpperCase();
-            }
-            
-            function getAvatarColor(name) {
-                var colors = [
-                    ['#4285F4', '#34A853'],
-                    ['#EA4335', '#FBBC05'],
-                    ['#4A90E2', '#6BB6FF'],
-                    ['#9C27B0', '#E91E63'],
-                    ['#009688', '#4CAF50'],
-                    ['#FF5722', '#FF9800'],
-                    ['#3F51B5', '#2196F3']
-                ];
-                var index = name.length % colors.length;
-                return colors[index];
-            }
-            
-            function createReviewCard(review) {
-                var card = document.createElement('article');
-                card.className = 'review-card';
-                var colors = getAvatarColor(review.author);
-                var avatarStyle = 'background: linear-gradient(135deg, ' + colors[0] + ', ' + colors[1] + ');';
-                
-                card.innerHTML = 
-                    '<div class="review-header">' +
-                        '<div class="review-avatar" style="' + avatarStyle + '">' + getInitials(review.author) + '</div>' +
-                        '<div class="review-meta">' +
-                            '<p class="review-author">' + review.author + '</p>' +
-                            '<div class="review-meta-line">' +
-                                '<span class="review-stars">' + generateStars(review.rating) + '</span>' +
-                                '<span class="review-date">' + review.time + '</span>' +
-                            '</div>' +
-                        '</div>' +
-                        '<svg class="google-icon" width="20" height="20" viewBox="0 0 24 24">' +
-                            '<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>' +
-                            '<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>' +
-                            '<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>' +
-                            '<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>' +
-                        '</svg>' +
-                    '</div>' +
-                    '<p class="review-text">"' + review.text + '"</p>';
-                
-                return card;
-            }
-            
-            function populateCarousel() {
-                carousel.innerHTML = '';
-                googleReviews.forEach(function(review) {
-                    carousel.appendChild(createReviewCard(review));
-                });
-                createDots();
-                startAutoplay();
-            }
-            
-            function createDots() {
-                dotsContainer.innerHTML = '';
-                var totalDots = Math.min(Math.ceil(googleReviews.length / 2), 15);
-                for (var i = 0; i < totalDots; i++) {
-                    var dot = document.createElement('button');
-                    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-                    dot.dataset.index = i;
-                    dot.onclick = function() { goToSlide(parseInt(this.dataset.index)); };
-                    dotsContainer.appendChild(dot);
-                }
-            }
-            
-            function goToSlide(index) {
-                var cardWidth = 344;
-                var maxScroll = carousel.scrollWidth - carousel.offsetWidth;
-                var targetScroll = Math.min(index * cardWidth * 2, maxScroll);
-                carousel.scrollTo({ left: targetScroll, behavior: 'smooth' });
-                currentIndex = index;
-                updateDots();
-            }
-            
-            function updateDots() {
-                var dots = dotsContainer.querySelectorAll('.carousel-dot');
-                dots.forEach(function(dot, i) {
-                    dot.classList.toggle('active', i === currentIndex % dots.length);
-                });
-            }
-            
-            function nextSlide() {
-                var cardWidth = 344;
-                var maxScroll = carousel.scrollWidth - carousel.offsetWidth;
-                var newScroll = carousel.scrollLeft + cardWidth * 2;
-                if (newScroll >= maxScroll) {
-                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
-                    currentIndex = 0;
+
+            const formData = new FormData(this);
+            formData.append('cf-turnstile-response', turnstileToken);
+
+            fetch('contact.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    this.reset();
+                    if (typeof turnstile !== 'undefined') turnstile.reset();
+                    turnstileToken = null;
+                    document.getElementById('submitBtn').disabled = true;
                 } else {
-                    carousel.scrollTo({ left: newScroll, behavior: 'smooth' });
-                    currentIndex++;
+                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('successMessage').style.display = 'none';
                 }
-                updateDots();
-            }
-            
-            function prevSlide() {
-                var cardWidth = 344;
-                var newScroll = carousel.scrollLeft - cardWidth * 2;
-                if (newScroll <= 0) {
-                    carousel.scrollTo({ left: carousel.scrollWidth, behavior: 'smooth' });
-                    currentIndex = Math.ceil(googleReviews.length / 2) - 1;
-                } else {
-                    carousel.scrollTo({ left: newScroll, behavior: 'smooth' });
-                    currentIndex--;
-                }
-                updateDots();
-            }
-            
-            function startAutoplay() {
-                stopAutoplay();
-                autoplayInterval = setInterval(nextSlide, 6000);
-            }
-            
-            function stopAutoplay() {
-                if (autoplayInterval) clearInterval(autoplayInterval);
-            }
-            
-            document.addEventListener('DOMContentLoaded', function() {
-                carousel = document.getElementById('reviewsCarousel');
-                prevBtn = document.getElementById('carouselPrev');
-                nextBtn = document.getElementById('carouselNext');
-                dotsContainer = document.getElementById('carouselDots');
-                
-                if (!carousel) return;
-                
-                if (prevBtn) prevBtn.onclick = prevSlide;
-                if (nextBtn) nextBtn.onclick = nextSlide;
-                
-                var touchStartX = 0;
-                carousel.addEventListener('touchstart', function(e) {
-                    touchStartX = e.touches[0].clientX;
-                    stopAutoplay();
-                }, { passive: true });
-                
-                carousel.addEventListener('touchend', function(e) {
-                    var diff = touchStartX - e.changedTouches[0].clientX;
-                    if (Math.abs(diff) > 50) {
-                        if (diff > 0) nextSlide();
-                        else prevSlide();
-                    }
-                    startAutoplay();
-                }, { passive: true });
-                
-                carousel.addEventListener('mouseenter', stopAutoplay);
-                carousel.addEventListener('mouseleave', startAutoplay);
-                
-                populateCarousel();
+            })
+            .catch(() => {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
             });
-        })();
+        });
+
+        // ========== SCROLL ANIMATIONS ==========
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
