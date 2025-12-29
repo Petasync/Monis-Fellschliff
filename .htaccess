@@ -1,0 +1,92 @@
+# ============================================
+# MONI'S FELLSCHLIFF - .htaccess Konfiguration
+# ============================================
+
+# UTF-8 Encoding
+AddDefaultCharset UTF-8
+
+# PHP Einstellungen (falls möglich)
+<IfModule mod_php7.c>
+    php_value default_charset "UTF-8"
+    php_value mbstring.internal_encoding "UTF-8"
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 60
+    php_flag display_errors Off
+    php_flag log_errors On
+</IfModule>
+
+# Sicherheit - Dateizugriff blockieren
+<FilesMatch "\.(txt|log|md|sql|bak|config)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# PHP Dateien schützen (außer index, contact, booking)
+<FilesMatch "\.php$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+<FilesMatch "^(index|contact|booking|impressum)\.php$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Verzeichnis-Listing deaktivieren
+Options -Indexes
+
+# Browser Caching für bessere Performance
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# Kompression aktivieren
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# URL Rewriting für saubere URLs (optional)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # HTTPS Weiterleitung (wenn SSL verfügbar)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+    
+    # www hinzufügen oder entfernen (konsistente URL)
+    # RewriteCond %{HTTP_HOST} !^www\. [NC]
+    # RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+    
+    # Fehlerseiten
+    ErrorDocument 404 /index.html
+    ErrorDocument 500 /index.html
+</IfModule>
+
+# XSS Schutz
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Spam-Schutz für Formulare
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_METHOD} POST
+    RewriteCond %{REQUEST_URI} (contact|booking)\.php
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?monis-fellschliff\.de [NC]
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteRule .* - [F]
+</IfModule>
