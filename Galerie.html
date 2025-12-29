@@ -299,6 +299,48 @@
             padding: clamp(3rem, 8vw, 5rem) 0;
         }
 
+        /* ==================== GALLERY TABS ==================== */
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--text-dark);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab-button:hover {
+            background: rgba(74, 144, 226, 0.1);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tab-button.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-category {
+            display: none;
+        }
+
+        .gallery-category.active {
+            display: block;
+        }
+
         /* ==================== GALLERY INTRO ==================== */
         .gallery-intro {
             text-align: center;
@@ -708,7 +750,7 @@
     <section>
         <div class="container">
             <div class="gallery-intro animate-in">
-                <h2>Vorher/Nachher Transformationen</h2>
+                <h2>Unsere Galerie</h2>
                 <p>Entdecken Sie die wunderbaren Verwandlungen unserer vierbeinigen Kunden. Jeder Hund ist einzigartig und verdient eine individuelle, liebevolle Pflege.</p>
 
                 <!-- Social Media Links -->
@@ -722,8 +764,22 @@
                 </div>
             </div>
 
-            <!-- Gallery Grid -->
-            <div class="gallery-grid">
+            <!-- Gallery Tabs -->
+            <div class="gallery-tabs">
+                <button class="tab-button active" data-category="before-after">
+                    ✨ Vorher/Nachher
+                </button>
+                <button class="tab-button" data-category="normal">
+                    🐕 Unsere Fellnasen
+                </button>
+            </div>
+
+            <!-- Vorher/Nachher Gallery -->
+            <div class="gallery-category active" id="before-after">
+                <h3 style="text-align: center; color: var(--primary); font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 2rem;">
+                    ✨ Vorher/Nachher Transformationen
+                </h3>
+                <div class="gallery-grid">
                 <div class="gallery-item animate-in">
                     <img src="assets/images/gallery/dog-1.webp" alt="Professionelle Hundepflege" loading="lazy">
                 </div>
@@ -752,37 +808,49 @@
                     <img src="assets/images/gallery/dog-9.webp" alt="Hund in Badewanne" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-10.webp" alt="Fellpflege Hund" loading="lazy">
+                    <img src="assets/images/gallery/dog-10.webp" alt="Vorher/Nachher Transformation" loading="lazy">
+                </div>
+                <!-- HINWEIS: Bitte ordnen Sie die Vorher/Nachher-Bilder hier zu (dog-1 bis dog-10 sind Platzhalter) -->
+                </div>
+            </div>
+
+            <!-- Normale Hunde-Galerie -->
+            <div class="gallery-category" id="normal">
+                <h3 style="text-align: center; color: var(--primary); font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 2rem;">
+                    🐕 Unsere glücklichen Fellnasen
+                </h3>
+                <div class="gallery-grid">
+                <div class="gallery-item animate-in">
+                    <img src="assets/images/gallery/dog-11.webp" alt="Glücklicher Hund" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-11.webp" alt="Hundesalon Ansbach" loading="lazy">
+                    <img src="assets/images/gallery/dog-12.webp" alt="Süßer Hund" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-12.webp" alt="Kleiner Hund gepflegt" loading="lazy">
+                    <img src="assets/images/gallery/dog-13.webp" alt="Gepflegter Hund" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-13.webp" alt="Hundepflege Service" loading="lazy">
+                    <img src="assets/images/gallery/dog-14.webp" alt="Schöner Hund" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-14.webp" alt="Großer Hund Grooming" loading="lazy">
+                    <img src="assets/images/gallery/dog-15.webp" alt="Hund Portrait" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-15.webp" alt="Hund nach Schur" loading="lazy">
+                    <img src="assets/images/gallery/dog-16.webp" alt="Freundlicher Hund" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-16.webp" alt="Lockenhund gepflegt" loading="lazy">
+                    <img src="assets/images/gallery/dog-17.webp" alt="Niedlicher Hund" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-17.webp" alt="Hundepflege Experte" loading="lazy">
+                    <img src="assets/images/gallery/dog-18.webp" alt="Hundeportrait" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-18.webp" alt="Hund frisch gepflegt" loading="lazy">
-                </div>
-                <div class="gallery-item animate-in">
-                    <img src="assets/images/gallery/dog-19.webp" alt="Schwarzer Hund Grooming" loading="lazy">
+                    <img src="assets/images/gallery/dog-19.webp" alt="Gepflegter Hund" loading="lazy">
                 </div>
                 <div class="gallery-item animate-in">
                     <img src="assets/images/gallery/dog-20.webp" alt="Glücklicher Hund" loading="lazy">
+                </div>
+                <!-- HINWEIS: Bitte ordnen Sie die normalen Hundebilder hier zu (dog-11 bis dog-20 sind Platzhalter) -->
                 </div>
             </div>
 
@@ -929,6 +997,32 @@
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
+                });
+            });
+        })();
+
+        // ========== GALLERY TABS ==========
+        (function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const categories = document.querySelectorAll('.gallery-category');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const categoryId = button.getAttribute('data-category');
+
+                    // Remove active class from all buttons and categories
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    categories.forEach(cat => cat.classList.remove('active'));
+
+                    // Add active class to clicked button and corresponding category
+                    button.classList.add('active');
+                    document.getElementById(categoryId).classList.add('active');
+
+                    // Smooth scroll to gallery
+                    window.scrollTo({
+                        top: document.querySelector('.gallery-tabs').offsetTop - 100,
+                        behavior: 'smooth'
+                    });
                 });
             });
         })();
