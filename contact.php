@@ -9,7 +9,7 @@ $to_email = "info@monis-fellschliff.de"; // HIER IHRE E-MAIL EINTRAGEN
 $from_email = "noreply@monis-fellschliff.de";
 
 // Cloudflare Turnstile Konfiguration
-$turnstile_secret_key = "0x4AAAAAAB69pevbL4mqFV_7mcFjFQ_Ku_g"; // HIER IHR SECRET KEY EINTRAGEN
+
 
 // Fehler-Array
 $errors = [];
