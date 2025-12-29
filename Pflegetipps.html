@@ -9,14 +9,14 @@
     <meta name="author" content="Monika Burr - Moni's Fellschliff">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://monis-fellschliff.de/Pflegetipps.html">
-    
+
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://monis-fellschliff.de/Pflegetipps.html">
     <meta property="og:title" content="Pflegetipps & Ratgeber - Moni's Fellschliff">
     <meta property="og:description" content="Alles was Sie über die richtige Pflege Ihres Vierbeiners wissen müssen">
     <meta property="og:locale" content="de_DE">
-    
+
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
@@ -43,566 +43,805 @@
       }
     }
     </script>
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
-        
+
         :root {
-            --primary-color: #4A90E2;
-            --secondary-color: #6BB6FF;
-            --accent-color: #87CEEB;
-            --text-dark: #333;
-            --text-light: #666;
-            --bg-light: #F0F8FF;
-            --shadow: 0 4px 6px rgba(74, 144, 226, 0.15);
-            --shadow-hover: 0 8px 15px rgba(74, 144, 226, 0.25);
-            --success-color: #4CAF50;
-            --warning-color: #FF9800;
-            --info-color: #2196F3;
+            --primary: #4A90E2;
+            --primary-dark: #2E5C8A;
+            --secondary: #87CEEB;
+            --accent: #6BB6FF;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(74, 144, 226, 0.1);
+            --shadow-md: 0 4px 20px rgba(74, 144, 226, 0.15);
+            --shadow-lg: 0 8px 40px rgba(74, 144, 226, 0.2);
+            --gradient-primary: linear-gradient(135deg, #4A90E2 0%, #87CEEB 100%);
+            --gradient-overlay: linear-gradient(135deg, rgba(74, 144, 226, 0.9) 0%, rgba(135, 206, 235, 0.9) 100%);
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --info: #2196F3;
         }
-        
+
         html {
             scroll-behavior: smooth;
             font-size: 16px;
         }
-        
+
         body {
-            overflow-x: hidden;
-        }
-        
-        body.menu-open {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
-            background: white;
+            background: var(--white);
+            overflow-x: hidden;
         }
-        
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ==================== HEADER ==================== */
         header {
-            background: white;
-            padding: 1rem 0;
             position: fixed;
-            width: 100%;
             top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
             z-index: 1000;
-            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
-        
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
         nav {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            font-weight: bold;
-            color: var(--primary-color);
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: 700;
+            color: var(--primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 8px;
-            position: relative;
+            gap: 0.5rem;
+            transition: transform 0.3s ease;
             z-index: 1002;
+            position: relative;
         }
-        
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-paws {
+            display: flex;
+            gap: 4px;
+        }
+
         .paw-icon {
-            display: inline-block;
-            transform: rotate(-15deg);
+            font-size: 1.3rem;
+            filter: drop-shadow(0 2px 4px rgba(74, 144, 226, 0.3));
         }
-        
-        /* Desktop Navigation */
+
+        .paw-icon:first-child {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .paw-icon:last-child {
+            animation: float 3s ease-in-out infinite 0.5s;
+        }
+
         .nav-menu {
             list-style: none;
             display: flex;
-            gap: 1.5rem;
-            margin: 0;
-            padding: 0;
+            gap: 0.5rem;
+            align-items: center;
         }
-        
+
         .nav-menu li a {
-            color: var(--primary-color);
+            color: var(--text-dark);
             text-decoration: none;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: block;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
             font-size: 0.95rem;
         }
-        
-        .nav-menu li a:hover,
-        .nav-menu li a:focus {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-        
-        /* Mobile Menu Toggle */
-        .menu-toggle {
-            display: none;
-            flex;
-            background: white;
-            border-radius: 8px;
-            width: 50px;
-            height: 50px;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            position: relative;
-            z-index: 1002;
-            transition: transform 0.3s;
-        }
-        
-        .menu-toggle:active {
-            transform: scale(0.95);
-        }
-        
-        /* Mobile Navigation Styles */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-            
-            .nav-menu {
-                position: fixed;
-                transform: translateX(0);
-                top: 0;
-                flex-direction: column;
-                background: white;
-                width: 85%;
-                max-width: 320px;
-                height: 100vh;
-                padding: 6rem 0 2rem;
-                gap: 0;
-                transition: transform 0.3s ease;
-                box-shadow: 4px 0 20px rgba(0,0,0,0.3);
-                z-index: 1001;
-                overflow-y: auto;
-            }
-            
-            .nav-menu.active {
-                transform: translateX(0);
-            }
-            
-            .nav-menu li {
-                width: 100%;
-            }
-            
-            .nav-menu li a {
-                padding: 1.3rem 2rem;
-                border-radius: 0;
-                border-bottom: 1px solid #eee;
-                font-size: 1.1rem;
-            }
-            
-            .nav-menu li a:hover {
-                background: rgba(255,255,255,0.15);
-                transform: translateX(-100%);
-            }
-            
-            /* Overlay */
-            .nav-overlay {
-                display: none;
-            flex;
-                position: fixed;
-                top: 0;
-                transform: translateX(0);
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.6);
-                z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            }
-            
-            .nav-overlay.active {
-            opacity: 1;
-                display: block;
-            }
-        }
-        
-        /* ==================== HERO ==================== */
-        .hero {
-            margin-top: 70px;
-            padding: clamp(2rem, 6vw, 3rem) 1rem;
-            background: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero h1 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .hero p {
-            color: rgba(255,255,255,0.95);
-            font-size: clamp(1rem, 3vw, 1.2rem);
-        }
-        
-        /* ==================== CONTAINER ==================== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        
-        section {
-            padding: clamp(2rem, 6vw, 4rem) 1rem;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        
-        .section-title::after {
+
+        .nav-menu li a::before {
             content: '';
             position: absolute;
             bottom: 0;
             left: 50%;
-            transform: translateX(-100%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
         }
-        
+
+        .nav-menu li a:hover {
+            color: var(--primary);
+            background: rgba(74, 144, 226, 0.08);
+        }
+
+        .nav-menu li a:hover::before {
+            width: 80%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            width: 45px;
+            height: 45px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1002;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ==================== HERO ==================== */
+        .hero {
+            margin-top: 80px;
+            padding: clamp(3rem, 8vw, 5rem) 2rem;
+            background: var(--gradient-overlay), url('assets/images/hero/dogs-on-bench.webp') center/cover no-repeat;
+            background-attachment: fixed;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease 0.2s both;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: clamp(3rem, 8vw, 5rem) 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--text-dark);
+            margin-bottom: 3rem;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
         /* ==================== QUICK TIPS ==================== */
-        .quick-tips {
-            background: white;
-        }
-        
         .tips-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            gap: 2rem;
+            margin-top: 3rem;
         }
-        
+
         .tip-card {
             background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
+            padding: 2rem;
+            border-radius: 20px;
             text-align: center;
-            transition: all 0.3s;
-            border-top: 3px solid var(--secondary-color);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
         }
-        
-        .tip-card:active {
-            transform: scale(0.98);
+
+        .tip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
         }
-        
+
+        .tip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
         .tip-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
+            display: block;
         }
-        
+
         .tip-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
-        
+
         .tip-card p {
             color: var(--text-light);
-            font-size: 0.95rem;
+            line-height: 1.8;
         }
-        
+
         /* ==================== CONTENT GRID ==================== */
         .content-section {
-            background: var(--bg-light);
+            background: var(--light);
         }
-        
+
         .content-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 2rem;
             margin-top: 2rem;
         }
-        
+
         @media (min-width: 992px) {
             .content-grid {
                 grid-template-columns: 2fr 1fr;
             }
-            
+
             .sidebar {
                 position: sticky;
                 top: 100px;
                 height: fit-content;
             }
         }
-        
+
         /* ==================== ARTICLE CARDS ==================== */
         .article-card {
             background: white;
             border-radius: 20px;
-            padding: clamp(1.5rem, 4vw, 2rem);
+            padding: 2.5rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
         }
-        
-        .article-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            transform: translateX(0);
-            width: 5px;
-            height: 100%;
-            background: white;
+
+        .article-card:hover {
+            box-shadow: var(--shadow-lg);
         }
-        
+
         .article-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
-        
+
         .article-icon {
-            width: 60px;
-            height: 60px;
-            background: white;
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 2rem;
             flex-shrink: 0;
+            box-shadow: var(--shadow-md);
         }
-        
+
         .article-card h2 {
-            color: var(--primary-color);
-            font-size: clamp(1.3rem, 4vw, 1.8rem);
-            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
         }
-        
+
         .article-card h3 {
-            color: var(--secondary-color);
-            margin: 1.5rem 0 1rem;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            color: var(--text-dark);
+            margin: 2rem 0 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
         }
-        
+
         .article-card h4 {
-            color: var(--primary-color);
-            margin-top: 1rem;
-            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
-        
+
         .article-card p {
             margin-bottom: 1rem;
             line-height: 1.8;
+            color: var(--text-light);
         }
-        
+
         .checklist {
             list-style: none;
             padding: 1rem 0;
         }
-        
+
         .checklist li {
-            padding: 0.6rem 0;
-            padding-left: 30px;
+            padding: 0.7rem 0 0.7rem 2.5rem;
             position: relative;
-            line-height: 1.6;
+            line-height: 1.8;
         }
-        
+
         .checklist li::before {
             content: '✅';
             position: absolute;
-            transform: translateX(0);
-            top: 0.6rem;
+            left: 0;
+            top: 0.7rem;
+            font-size: 1.2rem;
         }
-        
+
         /* ==================== INFO BOXES ==================== */
         .tip-box,
         .warning-box,
         .info-box {
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 10px 10px 0;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 15px;
             border-left: 4px solid;
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .tip-box {
-            background: #e8f5e9;
-            border-left-color: var(--success-color);
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border-left-color: var(--success);
         }
-        
+
         .warning-box {
-            background: #FFF3E0;
-            border-left-color: var(--warning-color);
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left-color: var(--warning);
         }
-        
+
         .info-box {
-            background: #E3F2FD;
-            border-left-color: var(--info-color);
+            background: linear-gradient(135deg, #e3f2fd 0%, #e1f5fe 100%);
+            border-left-color: var(--info);
         }
-        
+
         .tip-box strong,
         .warning-box strong,
         .info-box strong {
             display: block;
             margin-bottom: 0.5rem;
+            font-size: 1.05rem;
         }
-        
+
         .info-box ul {
             margin-top: 0.5rem;
-            padding-left: 1.2rem;
+            padding-left: 1.5rem;
         }
-        
+
         .info-box li {
             line-height: 1.8;
+            margin-bottom: 0.3rem;
         }
-        
+
         /* ==================== SIDEBAR ==================== */
         .sidebar-card {
             background: white;
             border-radius: 20px;
-            padding: 1.5rem;
+            padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
         }
-        
+
+        .sidebar-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
         .sidebar-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: clamp(1.1rem, 3vw, 1.2rem);
+            font-size: 1.2rem;
+            font-weight: 600;
         }
-        
+
         .sidebar-list {
             list-style: none;
         }
-        
+
         .sidebar-list li {
-            padding: 0.7rem 0;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 0.5rem;
         }
-        
+
         .sidebar-list a {
             color: var(--text-dark);
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 0.7rem;
+            border-radius: 10px;
         }
-        
-        .sidebar-list a:active {
-            transform: translateX(-100%);
+
+        .sidebar-list a:hover {
+            color: var(--primary);
+            background: rgba(74, 144, 226, 0.08);
+            transform: translateX(5px);
         }
-        
-        /* ==================== CTA SECTION ==================== */
-        .cta-button {
-            display: inline-block;
-            padding: 1.3rem 2rem;
-            background: white;
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: 30px;
-            transition: all 0.3s;
-            box-shadow: var(--shadow);
-            margin-top: 1.5rem;
-            font-weight: bold;
-            min-height: 50px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+
+        .contact-card {
+            background: var(--gradient-primary);
+            color: white;
         }
-        
-        .cta-button:active {
-            transform: scale(0.97);
+
+        .contact-card h3 {
+            color: white;
         }
-        
-        /* ==================== FOOTER ==================== */
-        footer {
-            background: var(--primary-color);
-            color: var(--primary-color);
-            text-align: center;
-            padding: clamp(1.5rem, 4vw, 2rem);
-        }
-        
-        footer p {
+
+        .contact-card p {
+            color: rgba(255, 255, 255, 0.95);
             line-height: 1.8;
         }
-        
-        footer strong {
-            color: var(--accent-color);
+
+        .contact-card a {
+            color: white;
+            font-weight: 600;
         }
-        
-        /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 480px) {
-            .tips-grid {
-                grid-template-columns: 1fr;
+
+        .contact-btn {
+            display: block;
+            text-align: center;
+            background: white;
+            color: var(--primary);
+            padding: 1rem;
+            border-radius: 15px;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ==================== CTA SECTION ==================== */
+        .cta-section {
+            padding: clamp(3rem, 6vw, 4rem) 0;
+            text-align: center;
+            background: var(--light);
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            margin: 0.5rem;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: clamp(2rem, 5vw, 3rem) 2rem 1.5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        footer p {
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        footer strong {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* ==================== MOBILE STYLES ==================== */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
             }
-            
+
+            .nav-menu {
+                position: fixed;
+                left: 0;
+                top: 0;
+                flex-direction: column;
+                background: white;
+                width: 85%;
+                max-width: 350px;
+                height: 100vh;
+                padding: 6rem 0 2rem;
+                gap: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 4px 0 30px rgba(0, 0, 0, 0.2);
+                z-index: 1001;
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .nav-menu li {
+                width: 100%;
+                border-bottom: 1px solid rgba(74, 144, 226, 0.1);
+            }
+
+            .nav-menu li a {
+                padding: 1.2rem 2rem;
+                border-radius: 0;
+                display: block;
+            }
+
+            .nav-menu li a::before {
+                display: none;
+            }
+
+            .nav-menu li a:hover {
+                background: rgba(74, 144, 226, 0.1);
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                background-attachment: scroll;
+            }
+
             .article-header {
                 flex-direction: column;
                 text-align: center;
             }
-            
-            .cta-button {
-                width: 100%;
-                margin: 0.5rem 0;
+
+            .tips-grid {
+                grid-template-columns: 1fr;
             }
         }
-        
+
+        /* ==================== ACCESSIBILITY ==================== */
         @media (prefers-reduced-motion: reduce) {
             * {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
+                animation: none !important;
+                transition: none !important;
             }
             html {
                 scroll-behavior: auto;
             }
         }
-        
+
         *:focus-visible {
-            outline: 3px solid var(--secondary-color);
+            outline: 3px solid var(--accent);
             outline-offset: 2px;
+        }
+
+        /* ==================== SCROLL TO TOP ==================== */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+            border: none;
+            font-size: 1.5rem;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header id="header">
         <nav>
-            <a href="index.html" class="logo" aria-label="Moni's Fellschliff Startseite">
-                <span class="paw-icon">🐾</span>
+            <a href="index.html" class="logo">
+                <div class="logo-paws">
+                    <span class="paw-icon">🐾</span>
+                    <span class="paw-icon">🐾</span>
+                </div>
                 <span>Moni's Fellschliff</span>
             </a>
-            
-            <button class="menu-toggle" id="menuToggle" aria-label="Menü öffnen" aria-expanded="false">
-                ☰
-            </button>
-            
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Menü öffnen">☰</button>
+
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Startseite</a></li>
-                <li><a href="#tips">Pflegetipps</a></li>
-                <li><a href="#ratgeber">Ratgeber</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Leistungen</a></li>
+                <li><a href="index.html#about">Über mich</a></li>
+                <li><a href="Galerie.html">Galerie</a></li>
                 <li><a href="index.html#contact">Kontakt</a></li>
             </ul>
         </nav>
@@ -611,32 +850,34 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Pflegetipps & Ratgeber</h1>
-        <p>Alles was Sie über die richtige Pflege Ihres Vierbeiners wissen müssen</p>
+        <div class="hero-content">
+            <h1>🐾 Pflegetipps & Ratgeber 🐾</h1>
+            <p>Alles was Sie über die richtige Pflege Ihres Vierbeiners wissen müssen</p>
+        </div>
     </section>
 
     <!-- Quick Tips Section -->
-    <section class="quick-tips" id="tips">
+    <section id="tips">
         <div class="container">
             <h2 class="section-title">Schnelle Tipps für den Alltag</h2>
             <div class="tips-grid">
-                <article class="tip-card">
-                    <div class="tip-icon">🚿</div>
+                <article class="tip-card animate-in">
+                    <span class="tip-icon">🚿</span>
                     <h3>Badefrequenz</h3>
                     <p>Alle 4-6 Wochen baden, bei Bedarf öfter. Zu häufiges Baden kann die Haut austrocknen.</p>
                 </article>
-                <article class="tip-card">
-                    <div class="tip-icon">🪮</div>
+                <article class="tip-card animate-in">
+                    <span class="tip-icon">🪮</span>
                     <h3>Tägliches Bürsten</h3>
                     <p>5-10 Minuten täglich bürsten verhindert Verfilzungen und fördert die Durchblutung.</p>
                 </article>
-                <article class="tip-card">
-                    <div class="tip-icon">✂️</div>
+                <article class="tip-card animate-in">
+                    <span class="tip-icon">✂️</span>
                     <h3>Krallenlänge</h3>
                     <p>Krallen sollten den Boden nicht berühren, wenn der Hund steht. Alle 3-4 Wochen kontrollieren.</p>
                 </article>
-                <article class="tip-card">
-                    <div class="tip-icon">👂</div>
+                <article class="tip-card animate-in">
+                    <span class="tip-icon">👂</span>
                     <h3>Ohrenpflege</h3>
                     <p>Wöchentlich kontrollieren und bei Bedarf mit speziellem Ohrenreiniger säubern.</p>
                 </article>
@@ -651,17 +892,17 @@
                 <!-- Main Articles -->
                 <div class="main-content">
                     <!-- Fellpflege Guide -->
-                    <article class="article-card" id="fellpflege">
+                    <article class="article-card animate-in" id="fellpflege">
                         <div class="article-header">
                             <div class="article-icon">🐕</div>
                             <div>
                                 <h2>Der ultimative Fellpflege-Guide</h2>
-                                <p style="color: var(--text-light);">Alles über die richtige Fellpflege für jeden Felltyp</p>
+                                <p>Alles über die richtige Fellpflege für jeden Felltyp</p>
                             </div>
                         </div>
-                        
+
                         <h3>Felltypen und ihre Besonderheiten</h3>
-                        
+
                         <h4>Langhaar (z.B. Yorkshire Terrier, Malteser)</h4>
                         <ul class="checklist">
                             <li>Tägliches Bürsten ist Pflicht</li>
@@ -669,11 +910,11 @@
                             <li>Verwendung von Entwirrungsspray empfohlen</li>
                             <li>Besonders auf Verfilzungen hinter den Ohren achten</li>
                         </ul>
-                        
+
                         <div class="tip-box">
                             <strong>💡 Profi-Tipp:</strong> Beginnen Sie das Bürsten immer von unten nach oben und arbeiten Sie sich schichtweise vor.
                         </div>
-                        
+
                         <h4>Kurzhaar (z.B. Labrador, Beagle)</h4>
                         <ul class="checklist">
                             <li>2-3 mal wöchentlich bürsten</li>
@@ -681,7 +922,7 @@
                             <li>Gummistriegel oder Furminator verwenden</li>
                             <li>Baden nur bei Verschmutzung nötig</li>
                         </ul>
-                        
+
                         <h4>Rauhaar (z.B. Schnauzer, Terrier)</h4>
                         <ul class="checklist">
                             <li>Trimmen statt Scheren für gesunde Fellstruktur</li>
@@ -689,24 +930,24 @@
                             <li>Regelmäßiges Zupfen abgestorbener Haare</li>
                             <li>Bart und Augenbrauen besonders pflegen</li>
                         </ul>
-                        
+
                         <div class="warning-box">
                             <strong>⚠️ Achtung:</strong> Niemals Rauhaar scheren! Dies zerstört die natürliche Fellstruktur dauerhaft.
                         </div>
                     </article>
 
                     <!-- Pflegewerkzeuge -->
-                    <article class="article-card" id="werkzeuge">
+                    <article class="article-card animate-in" id="werkzeuge">
                         <div class="article-header">
                             <div class="article-icon">🛠️</div>
                             <div>
                                 <h2>Die richtigen Pflegewerkzeuge</h2>
-                                <p style="color: var(--text-light);">Welche Bürste für welchen Felltyp?</p>
+                                <p>Welche Bürste für welchen Felltyp?</p>
                             </div>
                         </div>
-                        
+
                         <h3>Grundausstattung für jeden Hundebesitzer</h3>
-                        
+
                         <div class="info-box">
                             <strong>📋 Basis-Equipment:</strong>
                             <ul>
@@ -717,22 +958,22 @@
                                 <li>Mildes Hundeshampoo</li>
                             </ul>
                         </div>
-                        
+
                         <div class="tip-box">
                             <strong>💡 Investitions-Tipp:</strong> Qualität zahlt sich aus! Gute Werkzeuge halten Jahre und machen die Pflege für Sie und Ihren Hund angenehmer.
                         </div>
                     </article>
 
                     <!-- Jahreszeitenpflege -->
-                    <article class="article-card" id="jahreszeiten">
+                    <article class="article-card animate-in" id="jahreszeiten">
                         <div class="article-header">
                             <div class="article-icon">🌿</div>
                             <div>
                                 <h2>Pflege im Jahresverlauf</h2>
-                                <p style="color: var(--text-light);">Saisonale Pflegetipps für jede Jahreszeit</p>
+                                <p>Saisonale Pflegetipps für jede Jahreszeit</p>
                             </div>
                         </div>
-                        
+
                         <h3>🌸 Frühling - Fellwechselzeit</h3>
                         <ul class="checklist">
                             <li>Tägliches Bürsten während des Fellwechsels</li>
@@ -740,7 +981,7 @@
                             <li>Pfoten nach Spaziergängen auf Grannen kontrollieren</li>
                             <li>Allergien beobachten (Pollen)</li>
                         </ul>
-                        
+
                         <h3>☀️ Sommer - Hitzeschutz</h3>
                         <ul class="checklist">
                             <li>Niemals komplett scheren - Fell schützt vor Sonne!</li>
@@ -748,7 +989,7 @@
                             <li>Nach dem Baden im See gründlich abspülen</li>
                             <li>Regelmäßig auf Parasiten kontrollieren</li>
                         </ul>
-                        
+
                         <h3>🍂 Herbst - Vorbereitung auf Winter</h3>
                         <ul class="checklist">
                             <li>Zweiter großer Fellwechsel des Jahres</li>
@@ -756,7 +997,7 @@
                             <li>Nässe nach Spaziergängen gründlich trocknen</li>
                             <li>Winterfell wachsen lassen</li>
                         </ul>
-                        
+
                         <h3>❄️ Winter - Kälteschutz</h3>
                         <ul class="checklist">
                             <li>Pfotenbalsam gegen Streusalz verwenden</li>
@@ -770,7 +1011,7 @@
                 <!-- Sidebar -->
                 <aside class="sidebar">
                     <!-- Quick Links -->
-                    <div class="sidebar-card">
+                    <div class="sidebar-card animate-in">
                         <h3>🔗 Schnellzugriff</h3>
                         <ul class="sidebar-list">
                             <li><a href="#fellpflege">🐕 Fellpflege-Guide</a></li>
@@ -780,13 +1021,11 @@
                     </div>
 
                     <!-- Contact Box -->
-                    <div class="sidebar-card" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white;">
-                        <h3 style="color: white;">💬 Fragen?</h3>
+                    <div class="sidebar-card contact-card animate-in">
+                        <h3>💬 Fragen?</h3>
                         <p>Ich berate Sie gerne persönlich zu allen Pflegefragen!</p>
-                        <p style="margin-top: 1rem;"><strong>📞 <a href="tel:+4917648852064" style="color: white;">0176 48852064</a></strong></p>
-                        <a href="index.html#contact" style="display: block; text-align: center; background: white; color: var(--primary-color); padding: 0.8rem; border-radius: 10px; text-decoration: none; margin-top: 1rem; font-weight: bold;">
-                            Termin vereinbaren
-                        </a>
+                        <p style="margin-top: 1rem;"><strong>📞 <a href="tel:+4917648852064">0176 48852064</a></strong></p>
+                        <a href="index.html#contact" class="contact-btn">Termin vereinbaren</a>
                     </div>
                 </aside>
             </div>
@@ -794,70 +1033,126 @@
     </section>
 
     <!-- CTA Section -->
-    <section style="padding: clamp(2rem, 6vw, 3rem) 1rem; text-align: center; background: var(--bg-light);">
+    <section class="cta-section">
         <div class="container">
-            <h2 style="color: var(--primary-color); margin-bottom: 1rem; font-size: clamp(1.5rem, 4vw, 2rem);">Professionelle Pflege gewünscht?</h2>
-            <p style="color: var(--text-light); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Gerne übernehme ich die fachgerechte Pflege Ihres Lieblings. 
-                Mit meiner Erfahrung und Leidenschaft sorge ich dafür, dass sich Ihr Hund rundum wohlfühlt.
+            <h2 style="color: var(--primary); margin-bottom: 1rem; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700;">Professionelle Pflege gewünscht?</h2>
+            <p style="color: var(--text-light); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.8;">
+                Gerne übernehme ich die fachgerechte Pflege Ihres Lieblings. Mit meiner Erfahrung und Leidenschaft sorge ich dafür, dass sich Ihr Hund rundum wohlfühlt.
             </p>
             <a href="index.html#services" class="cta-button">Unsere Leistungen ansehen</a>
-            <a href="index.html#contact" class="cta-button" style="margin-left: 0.5rem;">Termin vereinbaren</a>
+            <a href="index.html#contact" class="cta-button">Termin vereinbaren</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <p><strong>Moni's Fellschliff</strong><br>
-            Professionelle Hundepflege mit Herz und Verstand<br>
-            📞 <a href="tel:+4917648852064" style="color: white;">0176 48852064</a> | 📍 Dietenhofen<br>
-            &copy; 2024 Alle Rechte vorbehalten | <a href="impressum.html" style="color: white;">Impressum</a></p>
+        <div class="footer-content">
+            <p>
+                <strong>Moni's Fellschliff</strong><br>
+                Professionelle Hundepflege mit Herz und Verstand<br>
+                📞 <a href="tel:+4917648852064">0176 48852064</a> | 📍 Dietenhofen<br>
+                &copy; 2025 Alle Rechte vorbehalten | <a href="impressum.html">Impressum</a>
+            </p>
         </div>
     </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" aria-label="Nach oben scrollen">↑</button>
 
     <script>
         // ========== HAMBURGER MENU ==========
         (function() {
-            var menuToggle = document.getElementById('menuToggle');
-            var navMenu = document.getElementById('navMenu');
-            var navOverlay = document.getElementById('navOverlay');
-            var body = document.body;
-            
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            const body = document.body;
+
             function toggleMenu() {
-                if (navMenu.classList.contains('active')) {
+                const isActive = navMenu.classList.contains('active');
+
+                if (isActive) {
                     navMenu.classList.remove('active');
                     navOverlay.classList.remove('active');
                     body.classList.remove('menu-open');
                     menuToggle.innerHTML = '☰';
-                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.setAttribute('aria-label', 'Menü öffnen');
                 } else {
                     navMenu.classList.add('active');
                     navOverlay.classList.add('active');
                     body.classList.add('menu-open');
                     menuToggle.innerHTML = '✕';
-                    menuToggle.setAttribute('aria-expanded', 'true');
+                    menuToggle.setAttribute('aria-label', 'Menü schließen');
                 }
             }
-            
-            menuToggle.onclick = function(e) {
+
+            menuToggle.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 toggleMenu();
-            };
-            
-            navOverlay.onclick = function() {
-                toggleMenu();
-            };
-            
-            var menuLinks = navMenu.querySelectorAll('a');
-            for (var i = 0; i < menuLinks.length; i++) {
-                menuLinks[i].onclick = function() {
+            });
+
+            navOverlay.addEventListener('click', toggleMenu);
+
+            const menuLinks = navMenu.querySelectorAll('a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
                     if (window.innerWidth <= 768) {
                         setTimeout(toggleMenu, 300);
                     }
-                };
-            }
+                });
+            });
+        })();
+
+        // ========== SCROLL ANIMATIONS ==========
+        (function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            const animateElements = document.querySelectorAll('.animate-in');
+            animateElements.forEach(el => observer.observe(el));
+        })();
+
+        // ========== HEADER SCROLL EFFECT ==========
+        (function() {
+            const header = document.getElementById('header');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        })();
+
+        // ========== SCROLL TO TOP BUTTON ==========
+        (function() {
+            const scrollTopBtn = document.getElementById('scrollTop');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 500) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
         })();
     </script>
 </body>
