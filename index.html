@@ -237,10 +237,10 @@
         /* ==================== HERO ==================== */
         .hero {
             margin-top: 80px;
-            min-height: 90vh;
+            min-height: 50vh;
             display: flex;
             align-items: center;
-            background: var(--gradient-overlay), url('assets/images/hero/dogs-on-bench.webp') center/cover no-repeat fixed;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.5) 0%, rgba(135, 206, 235, 0.4) 100%), url('assets/images/hero/dogs-on-bench.webp') center/cover no-repeat fixed;
             position: relative;
             overflow: hidden;
         }
@@ -252,7 +252,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(74, 144, 226, 0.3) 100%);
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(74, 144, 226, 0.1) 100%);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 40vh;
+                background-attachment: scroll;
+            }
         }
 
         .hero-content {
@@ -862,19 +869,30 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--primary);
             color: white;
             text-decoration: none;
             border-radius: 25px;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-md);
         }
 
         .social-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Social Links in Footer bleiben weiß/transparent */
+        footer .social-link {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        footer .social-link:hover {
             background: white;
             color: var(--primary);
-            transform: translateY(-3px);
         }
 
         .footer-bottom {
@@ -1003,7 +1021,7 @@
                 <li><a href="#about">Über mich</a></li>
                 <li><a href="#services">Leistungen</a></li>
                 <li><a href="Galerie.html">Galerie</a></li>
-                <li><a href="#reviews">Bewertungen</a></li>
+                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
         </nav>
