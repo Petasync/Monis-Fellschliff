@@ -1,15 +1,18 @@
 <?php
 // Admin Configuration
 define('ADMIN_USERNAME', 'monika');
-define('ADMIN_PASSWORD', password_hash('MonisFellschliff2025!', PASSWORD_DEFAULT)); // ÄNDERN SIE DIES!
+// Pre-hashed password for: MonisFellschliff2025!
+define('ADMIN_PASSWORD', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
 
 // Paths
-define('GALLERY_DIR', '../assets/images/gallery/');
+define('GALLERY_DIR', __DIR__ . '/../assets/images/gallery/');
 define('DATA_FILE', __DIR__ . '/gallery-data.json');
-define('GALLERY_HTML', '../Galerie.html');
+define('GALLERY_HTML', __DIR__ . '/../Galerie.html');
 
 // Security
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // CSRF Protection
 function generateCSRFToken() {
