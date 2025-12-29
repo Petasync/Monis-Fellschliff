@@ -1,0 +1,17 @@
+# Security for Admin Panel
+<Files "gallery-data.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent directory listing
+Options -Indexes
+
+# PHP Security
+php_flag display_errors off
+php_flag log_errors on
