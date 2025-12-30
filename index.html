@@ -405,6 +405,7 @@
         section {
             padding: clamp(4rem, 10vw, 8rem) 2rem;
             position: relative;
+            scroll-margin-top: 100px;
         }
 
         .container {
@@ -1225,13 +1226,8 @@
             }
         }
     </style>
-
-    <!-- Three.js für 3D Hund -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 </head>
 <body>
-    <!-- 3D Hund Container -->
-    <div id="dog3d-container" style="position: fixed; bottom: 20px; right: 20px; width: 200px; height: 200px; z-index: 999; pointer-events: none;"></div>
     <!-- Floating Paws Background Animation -->
     <div class="paw-container" id="pawContainer">
         <div class="floating-paw">🐾</div>
@@ -2325,9 +2321,13 @@
 
             // Close menu on link click
             navMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
+                link.addEventListener('click', (e) => {
                     if (window.innerWidth <= 768) {
-                        setTimeout(toggleMenu, 300);
+                        // Close menu immediately for internal links
+                        const href = link.getAttribute('href');
+                        if (href && href.startsWith('#')) {
+                            toggleMenu();
+                        }
                     }
                 });
             });
@@ -2341,9 +2341,16 @@
                     const target = document.querySelector(href);
                     if (target) {
                         e.preventDefault();
-                        const offset = 80;
+                        // Use larger offset on mobile for better positioning
+                        const isMobile = window.innerWidth <= 768;
+                        const offset = isMobile ? 100 : 80;
                         const pos = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({top: pos, behavior: 'smooth'});
+
+                        // Small delay on mobile to ensure menu is closed first
+                        const scrollDelay = isMobile ? 100 : 0;
+                        setTimeout(() => {
+                            window.scrollTo({top: pos, behavior: 'smooth'});
+                        }, scrollDelay);
                     }
                 }
             });
@@ -2414,7 +2421,7 @@
             observer.observe(el);
         });
 
-        // ========== REVIEWS CAROUSEL (AUTO-SCROLL 5 SEK + SWIPE) ==========
+        // ========== REVIEWS CAROUSEL (MANUAL NAVIGATION) ==========
         (function() {
             const reviewsTrack = document.getElementById('reviewsTrack');
             const carouselDotsContainer = document.getElementById('carouselDots');
@@ -2426,9 +2433,6 @@
 
             // State Management
             let currentIndex = 0;
-            let autoScrollTimer = null;
-            let userHasInteracted = false;
-            let isHovering = false;
 
             // Touch tracking
             let touchStartX = 0;
@@ -2444,8 +2448,6 @@
 
                 dot.addEventListener('click', (e) => {
                     e.preventDefault();
-                    userHasInteracted = true;
-                    stopAutoScroll();
                     goToSlide(index);
                 });
 
@@ -2483,23 +2485,6 @@
                 goToSlide(prevIndex);
             }
 
-            // Start auto-scroll
-            function startAutoScroll() {
-                // Only start if user hasn't interacted and not hovering
-                if (userHasInteracted || isHovering) return;
-
-                stopAutoScroll(); // Clear any existing timer
-                autoScrollTimer = setInterval(nextSlide, 5000);
-            }
-
-            // Stop auto-scroll permanently
-            function stopAutoScroll() {
-                if (autoScrollTimer) {
-                    clearInterval(autoScrollTimer);
-                    autoScrollTimer = null;
-                }
-            }
-
             // Touch event handlers
             reviewsTrack.addEventListener('touchstart', (e) => {
                 touchStartX = e.touches[0].clientX;
@@ -2518,9 +2503,6 @@
 
                 // Valid swipe: minimum distance, maximum time
                 if (Math.abs(touchDistance) > minSwipeDistance && touchDuration < maxSwipeTime) {
-                    userHasInteracted = true;
-                    stopAutoScroll();
-
                     if (touchDistance > 0) {
                         // Swiped left - go to next
                         nextSlide();
@@ -2536,31 +2518,16 @@
                 touchStartTime = 0;
             }, { passive: true });
 
-            // Mouse hover - pause auto-scroll temporarily
-            reviewsTrack.addEventListener('mouseenter', () => {
-                isHovering = true;
-                stopAutoScroll();
-            });
-
-            reviewsTrack.addEventListener('mouseleave', () => {
-                isHovering = false;
-                startAutoScroll(); // Will only restart if user hasn't interacted
-            });
-
             // Navigation buttons (Desktop)
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
 
             if (prevBtn && nextBtn) {
                 prevBtn.addEventListener('click', () => {
-                    userHasInteracted = true;
-                    stopAutoScroll();
                     prevSlide();
                 });
 
                 nextBtn.addEventListener('click', () => {
-                    userHasInteracted = true;
-                    stopAutoScroll();
                     nextSlide();
                 });
             }
@@ -2575,19 +2542,12 @@
 
                 if (e.key === 'ArrowLeft') {
                     e.preventDefault();
-                    userHasInteracted = true;
-                    stopAutoScroll();
                     prevSlide();
                 } else if (e.key === 'ArrowRight') {
                     e.preventDefault();
-                    userHasInteracted = true;
-                    stopAutoScroll();
                     nextSlide();
                 }
             });
-
-            // Initialize - start auto-scroll
-            startAutoScroll();
         })();
 
         // ========== FAQ ACCORDION ==========
@@ -2701,157 +2661,6 @@
                     animate();
                 }
             });
-        })();
-
-        // ========== 3D HUND ==========
-        (function() {
-            const container = document.getElementById('dog3d-container');
-            if (!container) return;
-
-            // Scene setup
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-
-            renderer.setSize(200, 200);
-            renderer.setClearColor(0x000000, 0);
-            container.appendChild(renderer.domElement);
-
-            // Camera position
-            camera.position.z = 5;
-
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(ambientLight);
-
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
-
-            // Dog material
-            const dogMaterial = new THREE.MeshPhongMaterial({
-                color: 0xD2691E,
-                shininess: 30
-            });
-
-            const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
-            const noseMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
-
-            // Dog group
-            const dog = new THREE.Group();
-
-            // Body (larger ellipsoid)
-            const bodyGeometry = new THREE.SphereGeometry(0.8, 32, 32);
-            bodyGeometry.scale(1.2, 0.9, 0.7);
-            const body = new THREE.Mesh(bodyGeometry, dogMaterial);
-            body.position.y = 0;
-            dog.add(body);
-
-            // Head (sphere)
-            const headGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-            const head = new THREE.Mesh(headGeometry, dogMaterial);
-            head.position.set(0.8, 0.3, 0);
-            dog.add(head);
-
-            // Snout (smaller sphere)
-            const snoutGeometry = new THREE.SphereGeometry(0.25, 16, 16);
-            snoutGeometry.scale(1.2, 0.8, 0.8);
-            const snout = new THREE.Mesh(snoutGeometry, dogMaterial);
-            snout.position.set(1.1, 0.1, 0);
-            dog.add(snout);
-
-            // Nose
-            const noseGeometry = new THREE.SphereGeometry(0.08, 16, 16);
-            const nose = new THREE.Mesh(noseGeometry, noseMaterial);
-            nose.position.set(1.3, 0.1, 0);
-            dog.add(nose);
-
-            // Eyes
-            const eyeGeometry = new THREE.SphereGeometry(0.08, 16, 16);
-            const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-            leftEye.position.set(1.0, 0.4, 0.2);
-            dog.add(leftEye);
-
-            const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-            rightEye.position.set(1.0, 0.4, -0.2);
-            dog.add(rightEye);
-
-            // Ears
-            const earGeometry = new THREE.SphereGeometry(0.25, 16, 16);
-            earGeometry.scale(0.6, 1.2, 0.3);
-
-            const leftEar = new THREE.Mesh(earGeometry, dogMaterial);
-            leftEar.position.set(0.6, 0.7, 0.3);
-            leftEar.rotation.z = 0.3;
-            dog.add(leftEar);
-
-            const rightEar = new THREE.Mesh(earGeometry, dogMaterial);
-            rightEar.position.set(0.6, 0.7, -0.3);
-            rightEar.rotation.z = -0.3;
-            dog.add(rightEar);
-
-            // Tail
-            const tailGeometry = new THREE.CylinderGeometry(0.1, 0.15, 0.8, 16);
-            const tail = new THREE.Mesh(tailGeometry, dogMaterial);
-            tail.position.set(-0.9, 0.3, 0);
-            tail.rotation.z = 0.5;
-            dog.add(tail);
-
-            // Legs (4 legs)
-            const legGeometry = new THREE.CylinderGeometry(0.12, 0.1, 0.6, 16);
-
-            const frontLeftLeg = new THREE.Mesh(legGeometry, dogMaterial);
-            frontLeftLeg.position.set(0.4, -0.7, 0.3);
-            dog.add(frontLeftLeg);
-
-            const frontRightLeg = new THREE.Mesh(legGeometry, dogMaterial);
-            frontRightLeg.position.set(0.4, -0.7, -0.3);
-            dog.add(frontRightLeg);
-
-            const backLeftLeg = new THREE.Mesh(legGeometry, dogMaterial);
-            backLeftLeg.position.set(-0.4, -0.7, 0.3);
-            dog.add(backLeftLeg);
-
-            const backRightLeg = new THREE.Mesh(legGeometry, dogMaterial);
-            backRightLeg.position.set(-0.4, -0.7, -0.3);
-            dog.add(backRightLeg);
-
-            scene.add(dog);
-
-            // Animation
-            let time = 0;
-            function animate() {
-                requestAnimationFrame(animate);
-
-                time += 0.01;
-
-                // Rotate dog slowly
-                dog.rotation.y = Math.sin(time * 0.5) * 0.3;
-
-                // Wag tail
-                tail.rotation.x = Math.sin(time * 3) * 0.3;
-
-                // Bob up and down
-                dog.position.y = Math.sin(time * 2) * 0.1;
-
-                renderer.render(scene, camera);
-            }
-
-            animate();
-
-            // Responsive
-            window.addEventListener('resize', () => {
-                if (window.innerWidth < 768) {
-                    container.style.display = 'none';
-                } else {
-                    container.style.display = 'block';
-                }
-            });
-
-            // Hide on mobile by default
-            if (window.innerWidth < 768) {
-                container.style.display = 'none';
-            }
         })();
 
     </script>
