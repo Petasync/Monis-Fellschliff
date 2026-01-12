@@ -300,51 +300,21 @@
             min-height: 60vh;
             display: flex;
             align-items: center;
+            background: url('assets/images/hero/dogs-on-bench.webp') center/cover no-repeat fixed;
             position: relative;
             overflow: hidden;
-        }
-
-        .hero-video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-
-        .hero-video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
         }
 
         @media (max-width: 768px) {
             .hero {
                 min-height: 50vh;
+                background-attachment: scroll;
             }
         }
 
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 1;
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
@@ -1080,6 +1050,11 @@
             width: 100%;
             height: 100%;
             border: none;
+            object-fit: cover;
+        }
+
+        .salon-video {
+            background: #000;
         }
 
         /* ==================== FOOTER ==================== */
@@ -1186,10 +1161,14 @@
                 padding: 0.8rem 1.5rem;
             }
 
-            /* Video Mobile Optimierung */
-            .hero-video {
-                object-fit: cover;
-                object-position: center;
+            /* Video Section Mobile Optimierung */
+            .video-container {
+                margin: 2rem 1rem 0;
+                border-radius: 15px;
+            }
+
+            .video-section {
+                padding: 2rem 0;
             }
 
             .menu-toggle {
@@ -1251,17 +1230,23 @@
                 padding: 0.6rem 1rem;
             }
 
-            /* Hero Video für kleine Bildschirme */
+            /* Hero für kleine Bildschirme */
             .hero {
                 min-height: 45vh;
             }
 
-            .hero-video-overlay {
-                background: rgba(0, 0, 0, 0.5);
-            }
-
             .hero h1 {
                 font-size: 2rem;
+            }
+
+            /* Video Section für kleine Bildschirme */
+            .video-container {
+                margin: 1.5rem 0.5rem 0;
+                border-radius: 10px;
+            }
+
+            .video-section {
+                padding: 1.5rem 0;
             }
 
             .hero-cta {
@@ -1336,12 +1321,6 @@
 
     <!-- Hero -->
     <section class="hero" id="home">
-        <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline>
-                <source src="Monis_Fellschliff.mp4" type="video/mp4">
-            </video>
-            <div class="hero-video-overlay"></div>
-        </div>
         <div class="hero-content">
             <h1 class="animate-in">Moni's Fellschliff</h1>
             <p class="hero-subtitle animate-in animate-delay-1">"Mit Herz, mit Seele und mit der Freude aneinander"</p>
@@ -2197,9 +2176,8 @@
             </div>
 
             <div class="video-container">
-                <!-- Platzhalter für Video - Video-Datei in assets/videos/salon.mp4 ablegen -->
-                <video controls poster="assets/images/salon/salon-impression.webp">
-                    <source src="assets/videos/salon.mp4" type="video/mp4">
+                <video class="salon-video" controls>
+                    <source src="Monis_Fellschliff.mp4" type="video/mp4">
                     Ihr Browser unterstützt das Video-Tag nicht.
                 </video>
             </div>
