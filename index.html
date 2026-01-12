@@ -2513,11 +2513,21 @@
         (function() {
             const reviewsTrack = document.getElementById('reviewsTrack');
             const carouselDotsContainer = document.getElementById('carouselDots');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
 
-            if (!reviewsTrack || !carouselDotsContainer) return;
+            if (!reviewsTrack || !carouselDotsContainer) {
+                console.log('Carousel elements not found');
+                return;
+            }
 
             const reviews = reviewsTrack.querySelectorAll('.review-card');
-            if (reviews.length === 0) return;
+            if (reviews.length === 0) {
+                console.log('No review cards found');
+                return;
+            }
+
+            console.log(`Carousel initialized with ${reviews.length} reviews`);
 
             // State Management
             let currentIndex = 0;
@@ -2546,7 +2556,10 @@
 
             // Navigate to specific slide
             function goToSlide(index) {
+                if (index < 0 || index >= reviews.length) return;
+
                 currentIndex = index;
+                console.log(`Going to slide ${currentIndex}`);
 
                 // Update transform
                 reviewsTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -2573,7 +2586,7 @@
                 goToSlide(prevIndex);
             }
 
-            // Touch event handlers
+            // Touch event handlers for mobile swipe
             reviewsTrack.addEventListener('touchstart', (e) => {
                 touchStartX = e.touches[0].clientX;
                 touchStartTime = Date.now();
@@ -2607,29 +2620,39 @@
             }, { passive: true });
 
             // Navigation buttons (Desktop)
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-
             if (prevBtn && nextBtn) {
-                prevBtn.addEventListener('click', () => {
+                prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Previous button clicked');
                     prevSlide();
                 });
 
-                nextBtn.addEventListener('click', () => {
+                nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Next button clicked');
                     nextSlide();
                 });
             }
 
-            // Keyboard navigation (Arrow keys)
-            document.addEventListener('keydown', (e) => {
+            // Keyboard navigation (Arrow keys) - Global event
+            window.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft' || e.key === 'Left') {
                     e.preventDefault();
+                    console.log('Left arrow pressed');
                     prevSlide();
                 } else if (e.key === 'ArrowRight' || e.key === 'Right') {
                     e.preventDefault();
+                    console.log('Right arrow pressed');
                     nextSlide();
                 }
             });
+
+            // Auto-advance every 5 seconds (optional, can be removed)
+            // setInterval(() => {
+            //     nextSlide();
+            // }, 5000);
+
+            console.log('Carousel setup complete');
         })();
 
         // ========== FAQ ACCORDION ==========
