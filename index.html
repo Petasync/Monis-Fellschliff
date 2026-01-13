@@ -818,7 +818,7 @@
             position: relative;
             max-width: 800px;
             margin: 3rem auto 0;
-            overflow: hidden;
+            overflow: visible; /* Changed from hidden to visible for nav buttons */
             background: white;
             border-radius: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -828,6 +828,8 @@
         .reviews-track {
             display: flex;
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden; /* Keep content overflow hidden */
+            border-radius: 16px;
         }
 
         .review-card {
@@ -899,8 +901,9 @@
             font-size: 1.5rem;
             color: #5f6368;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 10;
+            z-index: 100; /* Increased from 10 to 100 */
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            pointer-events: auto; /* Ensure buttons are clickable */
         }
 
         .carousel-nav-btn:hover {
@@ -910,16 +913,29 @@
         }
 
         .carousel-nav-btn.prev {
-            left: -60px;
+            left: -60px; /* Position outside carousel */
         }
 
         .carousel-nav-btn.next {
-            right: -60px;
+            right: -60px; /* Position outside carousel */
         }
 
-        @media (max-width: 1000px) {
+        /* Mobile: Show buttons inside carousel */
+        @media (max-width: 1100px) {
+            .carousel-nav-btn.prev {
+                left: 10px; /* Position inside on smaller screens */
+            }
+
+            .carousel-nav-btn.next {
+                right: 10px; /* Position inside on smaller screens */
+            }
+        }
+
+        @media (max-width: 768px) {
             .carousel-nav-btn {
-                display: none;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
         }
 
@@ -2528,6 +2544,10 @@
             }
 
             console.log(`Carousel initialized with ${reviews.length} reviews`);
+            console.log('prevBtn:', prevBtn);
+            console.log('nextBtn:', nextBtn);
+            console.log('prevBtn display:', prevBtn ? window.getComputedStyle(prevBtn).display : 'N/A');
+            console.log('nextBtn display:', nextBtn ? window.getComputedStyle(nextBtn).display : 'N/A');
 
             // State Management
             let currentIndex = 0;
@@ -2621,17 +2641,31 @@
 
             // Navigation buttons (Desktop)
             if (prevBtn && nextBtn) {
+                console.log('Adding click listeners to buttons');
+
                 prevBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    console.log('Previous button clicked');
+                    e.stopPropagation();
+                    console.log('Previous button clicked - event:', e);
+                    console.log('Current index before:', currentIndex);
                     prevSlide();
+                    console.log('Current index after:', currentIndex);
                 });
 
                 nextBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    console.log('Next button clicked');
+                    e.stopPropagation();
+                    console.log('Next button clicked - event:', e);
+                    console.log('Current index before:', currentIndex);
                     nextSlide();
+                    console.log('Current index after:', currentIndex);
                 });
+
+                // Test if buttons are clickable
+                console.log('prevBtn clickable test:', prevBtn.offsetParent !== null);
+                console.log('nextBtn clickable test:', nextBtn.offsetParent !== null);
+            } else {
+                console.error('Buttons not found! prevBtn:', prevBtn, 'nextBtn:', nextBtn);
             }
 
             // Keyboard navigation (Arrow keys) - Global event
